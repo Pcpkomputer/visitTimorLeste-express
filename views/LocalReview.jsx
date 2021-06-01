@@ -2,7 +2,7 @@ var React = require('react');
 var Sidebar = require("./components/Sidebar");
 
 
-function Dashboard(props) {
+function LocalReview(props) {
   return (
       <html>
       <head>
@@ -16,7 +16,7 @@ function Dashboard(props) {
       </head>
       <body>
         <div className="wrapper ">
-          <Sidebar selected="dashboard"/>
+          <Sidebar selected="localreview"/>
           <div className="main-panel" style={{height: '100vh'}}>
             <nav className="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
               <div className="container-fluid">
@@ -53,61 +53,46 @@ function Dashboard(props) {
               </div>
             </nav>
             <div className="content">
-              <div className="row">
-                <div className="col-md-6 col-lg-4">
-                  <div className="card">
-                    <div className="card-body">
-                      <h4 className="card-title" style={{marginTop: '10px'}}>Tours</h4>
-                      <h6 className="card-subtitle mb-2 text-muted">Total Tours</h6>
-                      <h3 style={{marginBottom: '10px'}}>5</h3>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-6 col-lg-4">
-                  <div className="card">
-                    <div className="card-body">
-                      <h4 className="card-title" style={{marginTop: '10px'}}>Category</h4>
-                      <h6 className="card-subtitle mb-2 text-muted">Total Category</h6>
-                      <h3 style={{marginBottom: '10px'}}>10</h3>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-6 col-lg-4">
-                  <div className="card">
-                    <div className="card-body">
-                      <h4 className="card-title" style={{marginTop: '10px'}}>Spotlights</h4>
-                      <h6 className="card-subtitle mb-2 text-muted">Total Spotlights</h6>
-                      <h3 style={{marginBottom: '10px'}}>4</h3>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-6 col-lg-4">
-                  <div className="card">
-                    <div className="card-body">
-                      <h4 className="card-title" style={{marginTop: '10px'}}>Promotions</h4>
-                      <h6 className="card-subtitle mb-2 text-muted">Total Promotions</h6>
-                      <h3 style={{marginBottom: '10px'}}>8</h3>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-6 col-lg-4">
-                  <div className="card">
-                    <div className="card-body">
-                      <h4 className="card-title" style={{marginTop: '10px'}}>User</h4>
-                      <h6 className="card-subtitle mb-2 text-muted">Total User</h6>
-                      <h3 style={{marginBottom: '10px'}}>8</h3>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-6 col-lg-4">
-                  <div className="card">
-                    <div className="card-body">
-                      <h4 className="card-title" style={{marginTop: '10px'}}>Review</h4>
-                      <h6 className="card-subtitle mb-2 text-muted">Total Review</h6>
-                      <h3 style={{marginBottom: '10px'}}>8</h3>
-                    </div>
-                  </div>
-                </div>
+              <div className="row" style={{margin:0}}>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addSpotlightsModal">Add Local Review</button>
+                    <div class="table-responsive"> 
+                        <table id="table" class="table"> 
+                            <thead class=" text-primary"> 
+                            <tr>
+                                <th> No</th> 
+                                <th> Related Tours</th> 
+                                <th> User</th> 
+                                <th> Quote</th> 
+                                <th> Why Should Visit</th>
+                                <th> Special Tip </th>
+                            </tr>
+                            </thead> 
+                            <tbody> 
+                            <tr> 
+                                
+                                <td data-id="21398129sa21398127938" id="no"> 1 </td> 
+                                <td id="name"> The cruious case of the missing peranakan Treasurezzz </td> 
+                                <td id="tours"> Merlion Park</td>
+                                <td id="dateposted">2021-12-06 05:00:00</td>
+                                <td id="image">
+                                    <image style={{width:200,height:130,maxWidth:"none"}} src="/static/image/spotlights/mike.jpg"></image>
+                                </td>
+                                <td>
+                                    <div id="contentUpdateSpotlights" style={{display:"none"}}>asdasdsadasdasd</div>
+                                    <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
+                                    <form>
+                                        <button id="btnUpdate" type="button" data-toggle="modal" data-target="#updateSpotlightsModal" class="btn btn-warning">UPDATE</button>
+                                    </form>
+                                    <form action="/api/spotlights/delete/1" method="POST">
+                                        <button type="submit" class="btn btn-danger">DELETE</button>
+                                    </form>
+                                    </div>
+                                </td>
+                            </tr> 
+                            </tbody>
+                         </table> 
+                    </div>    
+              
               </div>
             </div>
           </div>
@@ -126,6 +111,6 @@ function Dashboard(props) {
   );
 }
 
-module.exports = Dashboard;
+module.exports = LocalReview;
 
 

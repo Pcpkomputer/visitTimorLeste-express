@@ -36,6 +36,31 @@ function SideBar(props){
               <p>SPOTLIGHTS</p>
             </a>
           </li>
+          <li className={`${(props.selected==="localreview") ? "active":""}`}>
+            <a href="localreview">
+              <i className="nc-icon nc-support-17" />
+              <p>LOCAL REVIEW</p>
+            </a>
+          </li>
+          <li className={`${(props.selected==="precinct") ? "active":""}`}>
+            <a href="precinct">
+              <i className="nc-icon nc-istanbul" />
+              <p>PRECINCT</p>
+            </a>
+          </li>
+          <li className={`${(props.selected==="promotions") ? "active":""}`}>
+            <a href="promotions">
+              <i className="nc-icon nc-scissors" />
+              <p>PROMOTIONS</p>
+            </a>
+          </li>
+          <div class="logo"></div>
+          <li className={`${(props.selected==="user") ? "active":""}`}>
+            <a href="user">
+              <i className="nc-icon nc-single-02" />
+              <p>USER</p>
+            </a>
+          </li>
         </ul>
       </div>
     </div>

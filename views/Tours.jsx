@@ -24,6 +24,11 @@ function Tours(props) {
       <link href="static/assets/css/bootstrap.min.css" rel="stylesheet" />
       <link href="static/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
       <link href="static/assets/demo/demo.css" rel="stylesheet" />
+      <link href="static/assets/clockpicker/bootstrap-clockpicker.min.css" rel="stylesheet" />
+      <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css"/>
+
+
+      
       </head>
       <body>
         <div className="wrapper ">
@@ -74,12 +79,12 @@ function Tours(props) {
                     </div>
                 </div>:null
               }
-              <div className="row">
+              <div className="row" style={{margin:0}}>
                
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addToursModal">Add Tours</button>
            
                 <form action="api/tours/create" method="POST" encType="multipart/form-data" class="modal fade" id="addToursModal" tabindex="-1" role="dialog" aria-labelledby="addToursModal" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
+                  <div class="modal-dialog" style={{maxWidth:1300}} role="document">
                     <div class="modal-content">
                       <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Add Tours</h5>
@@ -87,48 +92,118 @@ function Tours(props) {
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
-                      <div class="modal-body">
-                        <div class="form-group">
-                          <label for="exampleFormControlSelect1">Category</label>
-                          <select required name="category" class="form-control" id="exampleFormControlSelect1">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                          </select>
-                        </div>
-                        <div class="form-group">
-                          <label for="exampleFormControlInput1">Tours Name</label>
-                          <input required name="name" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Adara Eco-Resort (Mario’s Place)"/>
-                        </div>
-                        <div class="form-group">
-                          <label for="exampleFormControlInput1">Address</label>
-                          <input required name="address" type="text" class="form-control" id="exampleFormControlInput1" placeholder="J.C. Zulueta St, Oton, 5020 Iloilo, Philippines"/>
-                        </div>
-                        <div class="form-group">
-                          <label for="exampleFormControlInput1">Website</label>
-                          <input required name="website" type="text" class="form-control" id="exampleFormControlInput1" placeholder="https://www.timorleste.tl/plan-your-trip/accommodation/"/>
-                        </div>
-                        <div class="form-group">
-                          <label for="exampleFormControlInput1">Phone</label>
-                          <input required name="phone" type="text" class="form-control" id="exampleFormControlInput1" placeholder="(+670) 207760 205333"/>
-                        </div>
-                        <div class="form-group">
-                          <label for="exampleFormControlTextarea1">Description</label>
-                          <textarea required name="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                        </div>
-                        <div class="form-group">
-                          <label for="exampleFormControlTextarea1">Image</label>
-                          <button id="btnSubmitTours" type="button" class="btn btn-primary form-control">Upload Image</button>
-                          <image id="previewToursImage" src="" style={{objectFit:"cover",backgroundColor:"whitesmoke",width:"100%",height:300,marginTop:15}}></image>
-                          <input required name="image" accept=".jpg,.png" style={{display:"none"}} id="inputToursImage" type="file"></input>
-                        
+                      <div class="modal-body row" style={{padding:"2rem"}}>
+                          <input required style={{display:"none"}} id="inputScheduleAddTours" type="text" name="schedule"></input>
+                          <div class="col-lg-6" style={{marginBottom:20}}>
+                              <div class="form-group">
+                                <label for="exampleFormControlSelect1">Category</label>
+                                <select required name="category" class="form-control" id="exampleFormControlSelect1">
+                                  <option>Promotions</option>
+                                  <option>Attractions</option>
+                                  <option>Accomodations</option>
+                                  <option>Food & Beverages</option>
+                                  <option>Bars & Clubs</option>
+                                  <option>Malls & Shops</option>
+                                  <option>Tours</option>
+                                  <option>Events</option>
+                                </select>
+                              </div>
+                              <div class="form-group">
+                                <label for="exampleFormControlInput1">Tours Name</label>
+                                <input required name="name" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Adara Eco-Resort (Mario’s Place)"/>
+                              </div>
+                              <div class="form-group">
+                                <label for="exampleFormControlInput1">Address</label>
+                                <input required name="address" type="text" class="form-control" id="exampleFormControlInput1" placeholder="J.C. Zulueta St, Oton, 5020 Iloilo, Philippines"/>
+                              </div>
+                              <div class="form-group">
+                                <label for="exampleFormControlInput1">Website</label>
+                                <input required name="website" type="text" class="form-control" id="exampleFormControlInput1" placeholder="https://www.timorleste.tl/plan-your-trip/accommodation/"/>
+                              </div>
+                              <div class="form-group">
+                                <label for="exampleFormControlInput1">Phone</label>
+                                <input required name="phone" type="text" class="form-control" id="exampleFormControlInput1" placeholder="(+670) 207760 205333"/>
+                              </div>
+                              <div class="form-group">
+                                <label for="exampleFormControlTextarea1">Description</label>
+                                <textarea required name="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                              </div>
+                              <div class="form-group">
+                                <label for="exampleFormControlTextarea1">Image</label>
+                                <button id="btnSubmitTours" type="button" class="btn btn-primary form-control">Upload Image</button>
+                                <image id="previewToursImage" src="" style={{objectFit:"cover",backgroundColor:"whitesmoke",width:"100%",height:300,marginTop:15}}></image>
+                                <input required name="image" accept=".jpg,.png" style={{display:"none"}} id="inputToursImage" type="file"></input>
+                              
+                              </div>
+                          </div>
+                          <div class="col-lg-6" style={{display:"flex",flexDirection:"column",marginBottom:20}}>
+                              <div style={{display:"flex",flexDirection:"row",marginBottom:20}}>
+                                  <div style={{flex:1,paddingRight:20}}>
+                                    <div class="form-group">
+                                      <label for="exampleFormControlInput1">Days</label>
+                                      <select id="dayTimeInputAdd" required name="category" class="form-control">
+                                        <option value="Sunday">Sunday</option>
+                                        <option value="Monday">Monday</option>
+                                        <option value="Tuesday">Tuesday</option>
+                                        <option value="Wednesday">Wednesday</option>
+                                        <option valye="Thursday">Thursday</option>
+                                        <option value="Friday">Friday</option>
+                                        <option value="Saturday">Saturday</option>
+                                        <option value="Public Holiday">Public Holiday</option>
+                                      </select>
+                                    </div>
+                                </div>
+                                <div style={{flex:1,paddingRight:20}}>
+                                    <div class="form-group">
+                                      <label for="exampleFormControlInput1">From :</label>
+                                      <div class="input-group clockpicker">
+                                          <input id="fromTimeInputAdd" readOnly type="text" class="form-control" style={{border:"solid 1px #dbdbdb",borderRadius:5}} value="09:30"/>
+                                          <span class="input-group-addon">
+                                              <span class="glyphicon glyphicon-time"></span>
+                                          </span>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div style={{flex:1,paddingRight:20}}>
+                                    <div class="form-group">
+                                      <label for="exampleFormControlInput1">To :</label>
+
+                                          <input id="toTimeInputAdd" readOnly type="text" class="form-control clockpicker" style={{border:"solid 1px #dbdbdb",borderRadius:5}} value="09:30"/>
+                                          <span class="input-group-addon">
+                                              <span class="glyphicon glyphicon-time"></span>
+                                          </span>
+       
+                                    </div>
+                                </div>
+                                 <div style={{flex:1}}>
+                                    <div class="form-group">
+                                      <label for="exampleFormControlInput1" style={{opacity:0,cursor:"default"}}>To :</label>
+
+                                       
+                                          <button id="addTimeTours" type="button"  class="form-control btn-success">Add</button>
+       
+                                    </div>
+                                </div>
+                            </div>
+                            <div style={{display:"flex",flex:1,maxHeight:814,overflow:"auto"}}>
+                                  <table class="table table-bordered table-hover">
+                                      <thead>
+                                        <tr>
+                                          <th scope="col">Days</th>
+                                          <th scope="col">From :</th>
+                                          <th scope="col">To :</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody id="contentAddTimeTours">
+                                      </tbody>
+                                </table>
+                            </div>
                         </div>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button id="realSubmitAddTours" type="submit" style={{display:"none"}} class="btn btn-primary">Submit</button>
+                        <button id="submitAddTours" type="button" class="btn btn-primary">Submit</button>
                       </div>
                     </div>
                   </div>
@@ -137,7 +212,7 @@ function Tours(props) {
 
 
 
-                <form action="api/tours/update/1" method="POST" encType="multipart/form-data" class="modal fade" id="updateToursModal" tabindex="-1" role="dialog" aria-labelledby="addToursModal" aria-hidden="true">
+                <form action="api/tours/update/undefined" method="POST" encType="multipart/form-data" class="modal fade" id="updateToursModal" tabindex="-1" role="dialog" aria-labelledby="addToursModal" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -149,43 +224,46 @@ function Tours(props) {
                       <div class="modal-body">
                         <div class="form-group">
                           <label for="exampleFormControlInput1">ID Tours</label>
-                          <input readOnly required name="name" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Adara Eco-Resort (Mario’s Place)"/>
+                          <input id="inputUpdateTours" readOnly required name="id" type="text" class="form-control" placeholder=""/>
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlSelect1">Category</label>
-                          <select required name="category" class="form-control" id="exampleFormControlSelect1">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
+                          <select id="inputUpdateTours" required name="category" class="form-control" >
+                                <option>Promotions</option>
+                                  <option>Attractions</option>
+                                  <option>Accomodations</option>
+                                  <option>Food & Beverages</option>
+                                  <option>Bars & Clubs</option>
+                                  <option>Malls & Shops</option>
+                                  <option>Tours</option>
+                                  <option>Events</option>
                           </select>
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlInput1">Tours Name</label>
-                          <input required name="name" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Adara Eco-Resort (Mario’s Place)"/>
+                          <input id="inputUpdateTours" required name="name" type="text" class="form-control" placeholder="Adara Eco-Resort (Mario’s Place)"/>
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlInput1">Address</label>
-                          <input required name="address" type="text" class="form-control" id="exampleFormControlInput1" placeholder="J.C. Zulueta St, Oton, 5020 Iloilo, Philippines"/>
+                          <input id="inputUpdateTours" required name="address" type="text" class="form-control" placeholder="J.C. Zulueta St, Oton, 5020 Iloilo, Philippines"/>
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlInput1">Website</label>
-                          <input required name="website" type="text" class="form-control" id="exampleFormControlInput1" placeholder="https://www.timorleste.tl/plan-your-trip/accommodation/"/>
+                          <input id="inputUpdateTours" required name="website" type="text" class="form-control" placeholder="https://www.timorleste.tl/plan-your-trip/accommodation/"/>
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlInput1">Phone</label>
-                          <input required name="phone" type="text" class="form-control" id="exampleFormControlInput1" placeholder="(+670) 207760 205333"/>
+                          <input id="inputUpdateTours" required name="phone" type="text" class="form-control" placeholder="(+670) 207760 205333"/>
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlTextarea1">Description</label>
-                          <textarea required name="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                          <textarea id="inputUpdateTours" required name="description" class="form-control" rows="3"></textarea>
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlTextarea1">Image</label>
-                          <button id="btnSubmitTours" type="button" class="btn btn-primary form-control">Upload Image</button>
-                          <image id="previewToursImage" src="" style={{objectFit:"cover",backgroundColor:"whitesmoke",width:"100%",height:300,marginTop:15}}></image>
-                          <input required name="image" accept=".jpg,.png" style={{display:"none"}} id="inputToursImage" type="file"></input>
+                          <button id="btnSubmitToursImageUpdate" type="button" class="btn btn-primary form-control">Upload Image</button>
+                          <image id="previewToursImageUpdate" src="" style={{objectFit:"cover",backgroundColor:"whitesmoke",width:"100%",height:300,marginTop:15}}></image>
+                          <input name="image" accept=".jpg,.png" style={{display:"none"}} id="inputToursImageUpdate" type="file"></input>
                         
                         </div>
                       </div>
@@ -201,8 +279,95 @@ function Tours(props) {
 
 
 
+                <form action="api/tours/:id/schedule/update" method="POST" encType="multipart/form-data" class="modal fade" id="updateTimeToursModal" tabindex="-1" role="dialog" aria-labelledby="addToursModal" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Time Tours</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div id="loadingIndicatorUpdateTimeTours" style={{position:"absolute",display:"none",width:"100%",height:"100%",zIndex:100,justifyContent:"center",alignItems:"center"}}>
+                            <div style={{backgroundColor:"black",opacity:0.7,position:"absolute",width:"100%",height:"100%",zIndex:1}}></div>
+                            <div style={{color:"white",zIndex:100}}>Loading data...</div>
+                      </div>
+                      <div class="modal-body">
+                         
+                            <div style={{display:"flex",flexDirection:"row",marginBottom:20}}>
+                                  <div style={{flex:1,paddingRight:20}}>
+                                    <div class="form-group">
+                                      <label for="exampleFormControlInput1">Days</label>
+                                      <select id="dayTimeInputAdd" required name="category" class="form-control">
+                                        <option value="Sunday">Sunday</option>
+                                        <option value="Monday">Monday</option>
+                                        <option value="Tuesday">Tuesday</option>
+                                        <option value="Wednesday">Wednesday</option>
+                                        <option valye="Thursday">Thursday</option>
+                                        <option value="Friday">Friday</option>
+                                        <option value="Saturday">Saturday</option>
+                                        <option value="Public Holiday">Public Holiday</option>
+                                      </select>
+                                    </div>
+                                </div>
+                                <div style={{flex:1,paddingRight:20}}>
+                                    <div class="form-group">
+                                      <label for="exampleFormControlInput1">From :</label>
+                                      <div class="input-group clockpicker">
+                                          <input id="fromTimeInputAdd" readOnly type="text" class="form-control" style={{border:"solid 1px #dbdbdb",borderRadius:5}} value="09:30"/>
+                                          <span class="input-group-addon">
+                                              <span class="glyphicon glyphicon-time"></span>
+                                          </span>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div style={{flex:1,paddingRight:20}}>
+                                    <div class="form-group">
+                                      <label for="exampleFormControlInput1">To :</label>
+
+                                          <input id="toTimeInputAdd" readOnly type="text" class="form-control clockpicker" style={{border:"solid 1px #dbdbdb",borderRadius:5}} value="09:30"/>
+                                          <span class="input-group-addon">
+                                              <span class="glyphicon glyphicon-time"></span>
+                                          </span>
+       
+                                    </div>
+                                </div>
+                                <div style={{flex:1}}>
+                                    <div class="form-group">
+                                      <label for="exampleFormControlInput1" style={{opacity:0,cursor:"default"}}>To :</label>
+
+                                       
+                                          <button id="addUpdateTimeTours" type="button"  class="form-control btn-success">Add</button>
+       
+                                    </div>
+                                </div>
+                            </div>
+                            <div style={{display:"flex",flex:1,maxHeight:814,overflow:"auto"}}>
+                                  <table class="table table-bordered table-hover">
+                                      <thead>
+                                        <tr>
+                                          <th scope="col">Days</th>
+                                          <th scope="col">From :</th>
+                                          <th scope="col">To :</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody id="contentAddTimeTours">
+                                      </tbody>
+                                </table>
+                            </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+
+
+
                 <div class="table-responsive"> 
-                    <table class="table"> 
+                    <table id="table" class="table"> 
                         <thead class=" text-primary"> 
                           <tr>
                             <th> No</th> 
@@ -219,23 +384,23 @@ function Tours(props) {
                         </thead> 
                         <tbody> 
                           <tr> 
-                            <td> 1 </td> 
-                            <td> Attraction </td> 
-                            <td> Merlion Park </td> 
-                            <td> 1 Fullerton Road Singapore 049213 </td> 
-                            <td> http://visitsingapore.sg </td> 
-                            <td> 081103245 </td> 
-                            <td> {trimText('The merlion park isadnhasklndsjklandsajndksjandkjsandskjandkasjndkjsandskjandksjadnskjandkajsndkjsandkjasndkjasnkdjasasdsadsad ')}</td> 
+                            <td data-id={"21398129sa21398127938"} id="no"> 1 </td> 
+                            <td id="category"> Attractions </td> 
+                            <td id="name"> Merlion Park </td> 
+                            <td id="address"> 1 Fullerton Road Singapore 049213 </td> 
+                            <td id="website"> http://visitsingapore.sg </td> 
+                            <td id="phone"> 081103245 </td> 
+                            <td id="description"> {trimText('The merlion park isadnhasklndsjklandsajndksjandkjsandskjandkasjndkjsandskjandksjadnskjandkajsndkjsandkjasndkjasnkdjasasdsadsad ')}</td> 
                             <td>
-                              <button type="button" class="btn btn-info">EDIT</button>
+                              <button id="btnEditTimeTours" type="button" class="btn btn-info">EDIT</button>
                             </td> 
-                            <td>
-                              <image style={{width:200,height:130,maxWidth:"none"}} src="https://blog.tripcetera.com/wp-content/uploads/2019/06/merlion-park-singapore.jpg"></image>
+                            <td id="image">
+                              <image style={{width:200,height:130,maxWidth:"none"}} src="/static/image/tours/image-1622520054816-688584648.jpeg"></image>
                             </td>
                             <td>
                                 <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
                                   <form>
-                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#updateToursModal">UPDATE</button>
+                                    <button id="btnUpdate" type="button" class="btn btn-warning">UPDATE</button>
                                   </form>
                                   <form action="/api/tours/delete/1" method="POST">
                                     <button type="submit" class="btn btn-danger">DELETE</button>
@@ -244,23 +409,177 @@ function Tours(props) {
                             </td>
                           </tr> 
                           <tr> 
-                            <td> 1 </td> 
-                            <td> Attraction </td> 
-                            <td> Merlion Park </td> 
-                            <td> 1 Fullerton Road Singapore 049213 </td> 
-                            <td> http://visitsingapore.sg </td> 
-                            <td> 081103245 </td> 
-                            <td> {trimText('The merlion park isadnhasklndsjklandsajndksjandkjsandskjandkasjndkjsandskjandksjadnskjandkajsndkjsandkjasndkjasnkdjasasdsadsad ')}</td> 
+                            <td data-id={"213981555555555555555555555"} id="no"> 1 </td> 
+                            <td id="category"> Promotions </td> 
+                            <td id="name"> Merlion Park </td> 
+                            <td id="address"> 1 Fullerton Road Singapore 049213 </td> 
+                            <td id="website"> http://visitsingapore.sg </td> 
+                            <td id="phone"> 081103245 </td> 
+                            <td id="description"> {trimText('The merlion park isadnhasklndsjklandsajndksjandkjsandskjandkasjndkjsandskjandksjadnskjandkajsndkjsandkjasndkjasnkdjasasdsadsad ')}</td> 
                             <td>
-                              <button type="button" className="btn btn-info">EDIT</button>
+                              <button id="btnEditTimeTours" type="button" class="btn btn-info">EDIT</button>
                             </td> 
-                            <td>
-                              <image style={{width:200,height:130,maxWidth:"none"}} src="https://blog.tripcetera.com/wp-content/uploads/2019/06/merlion-park-singapore.jpg"></image>
+                            <td id="image">
+                              <image style={{width:200,height:130,maxWidth:"none"}} src="/static/image/tours/image-1622520054816-688584648.jpeg"></image>
                             </td>
                             <td>
                                 <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
-                                  <button type="button" className="btn btn-warning">CHANGE</button>
-                                  <button type="button" className="btn btn-danger">DELETE</button>
+                                  <form>
+                                    <button id="btnUpdate" type="button" class="btn btn-warning">UPDATE</button>
+                                  </form>
+                                  <form action="/api/tours/delete/1" method="POST">
+                                    <button type="submit" class="btn btn-danger">DELETE</button>
+                                  </form>
+                                </div>
+                            </td>
+                          </tr> 
+                          <tr> 
+                            <td data-id={"213981555555555555555555555"} id="no"> 1 </td> 
+                            <td id="category"> Promotions </td> 
+                            <td id="name"> Merlion Park </td> 
+                            <td id="address"> 1 Fullerton Road Singapore 049213 </td> 
+                            <td id="website"> http://visitsingapore.sg </td> 
+                            <td id="phone"> 081103245 </td> 
+                            <td id="description"> {trimText('The merlion park isadnhasklndsjklandsajndksjandkjsandskjandkasjndkjsandskjandksjadnskjandkajsndkjsandkjasndkjasnkdjasasdsadsad ')}</td> 
+                            <td>
+                              <button id="btnEditTimeTours" type="button" class="btn btn-info">EDIT</button>
+                            </td> 
+                            <td id="image">
+                              <image style={{width:200,height:130,maxWidth:"none"}} src="/static/image/tours/image-1622520054816-688584648.jpeg"></image>
+                            </td>
+                            <td>
+                                <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
+                                  <form>
+                                    <button id="btnUpdate" type="button" class="btn btn-warning">UPDATE</button>
+                                  </form>
+                                  <form action="/api/tours/delete/1" method="POST">
+                                    <button type="submit" class="btn btn-danger">DELETE</button>
+                                  </form>
+                                </div>
+                            </td>
+                          </tr> 
+                          <tr> 
+                            <td data-id={"213981555555555555555555555"} id="no"> 1 </td> 
+                            <td id="category"> Promotions </td> 
+                            <td id="name"> Merlion Park </td> 
+                            <td id="address"> 1 Fullerton Road Singapore 049213 </td> 
+                            <td id="website"> http://visitsingapore.sg </td> 
+                            <td id="phone"> 081103245 </td> 
+                            <td id="description"> {trimText('The merlion park isadnhasklndsjklandsajndksjandkjsandskjandkasjndkjsandskjandksjadnskjandkajsndkjsandkjasndkjasnkdjasasdsadsad ')}</td> 
+                            <td>
+                              <button id="btnEditTimeTours" type="button" class="btn btn-info">EDIT</button>
+                            </td> 
+                            <td id="image">
+                              <image style={{width:200,height:130,maxWidth:"none"}} src="/static/image/tours/image-1622520054816-688584648.jpeg"></image>
+                            </td>
+                            <td>
+                                <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
+                                  <form>
+                                    <button id="btnUpdate" type="button" class="btn btn-warning">UPDATE</button>
+                                  </form>
+                                  <form action="/api/tours/delete/1" method="POST">
+                                    <button type="submit" class="btn btn-danger">DELETE</button>
+                                  </form>
+                                </div>
+                            </td>
+                          </tr> 
+                          <tr> 
+                            <td data-id={"213981555555555555555555555"} id="no"> 1 </td> 
+                            <td id="category"> Promotions </td> 
+                            <td id="name"> Merlion Park </td> 
+                            <td id="address"> 1 Fullerton Road Singapore 049213 </td> 
+                            <td id="website"> http://visitsingapore.sg </td> 
+                            <td id="phone"> 081103245 </td> 
+                            <td id="description"> {trimText('The merlion park isadnhasklndsjklandsajndksjandkjsandskjandkasjndkjsandskjandksjadnskjandkajsndkjsandkjasndkjasnkdjasasdsadsad ')}</td> 
+                            <td>
+                              <button id="btnEditTimeTours" type="button" class="btn btn-info">EDIT</button>
+                            </td> 
+                            <td id="image">
+                              <image style={{width:200,height:130,maxWidth:"none"}} src="/static/image/tours/image-1622520054816-688584648.jpeg"></image>
+                            </td>
+                            <td>
+                                <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
+                                  <form>
+                                    <button id="btnUpdate" type="button" class="btn btn-warning">UPDATE</button>
+                                  </form>
+                                  <form action="/api/tours/delete/1" method="POST">
+                                    <button type="submit" class="btn btn-danger">DELETE</button>
+                                  </form>
+                                </div>
+                            </td>
+                          </tr> 
+                          <tr> 
+                            <td data-id={"213981555555555555555555555"} id="no"> 1 </td> 
+                            <td id="category"> Promotions </td> 
+                            <td id="name"> Merlion Park </td> 
+                            <td id="address"> 1 Fullerton Road Singapore 049213 </td> 
+                            <td id="website"> http://visitsingapore.sg </td> 
+                            <td id="phone"> 081103245 </td> 
+                            <td id="description"> {trimText('The merlion park isadnhasklndsjklandsajndksjandkjsandskjandkasjndkjsandskjandksjadnskjandkajsndkjsandkjasndkjasnkdjasasdsadsad ')}</td> 
+                            <td>
+                              <button id="btnEditTimeTours" type="button" class="btn btn-info">EDIT</button>
+                            </td> 
+                            <td id="image">
+                              <image style={{width:200,height:130,maxWidth:"none"}} src="/static/image/tours/image-1622520054816-688584648.jpeg"></image>
+                            </td>
+                            <td>
+                                <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
+                                  <form>
+                                    <button id="btnUpdate" type="button" class="btn btn-warning">UPDATE</button>
+                                  </form>
+                                  <form action="/api/tours/delete/1" method="POST">
+                                    <button type="submit" class="btn btn-danger">DELETE</button>
+                                  </form>
+                                </div>
+                            </td>
+                          </tr> 
+                          <tr> 
+                            <td data-id={"213981555555555555555555555"} id="no"> 1 </td> 
+                            <td id="category"> Promotions </td> 
+                            <td id="name"> Merlion Park </td> 
+                            <td id="address"> 1 Fullerton Road Singapore 049213 </td> 
+                            <td id="website"> http://visitsingapore.sg </td> 
+                            <td id="phone"> 081103245 </td> 
+                            <td id="description"> {trimText('The merlion park isadnhasklndsjklandsajndksjandkjsandskjandkasjndkjsandskjandksjadnskjandkajsndkjsandkjasndkjasnkdjasasdsadsad ')}</td> 
+                            <td>
+                              <button id="btnEditTimeTours" type="button" class="btn btn-info">EDIT</button>
+                            </td> 
+                            <td id="image">
+                              <image style={{width:200,height:130,maxWidth:"none"}} src="/static/image/tours/image-1622520054816-688584648.jpeg"></image>
+                            </td>
+                            <td>
+                                <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
+                                  <form>
+                                    <button id="btnUpdate" type="button" class="btn btn-warning">UPDATE</button>
+                                  </form>
+                                  <form action="/api/tours/delete/1" method="POST">
+                                    <button type="submit" class="btn btn-danger">DELETE</button>
+                                  </form>
+                                </div>
+                            </td>
+                          </tr> 
+                          <tr> 
+                            <td data-id={"213981555555555555555555555"} id="no"> 1 </td> 
+                            <td id="category"> Promotions </td> 
+                            <td id="name"> Merlion Park </td> 
+                            <td id="address"> 1 Fullerton Road Singapore 049213 </td> 
+                            <td id="website"> http://visitsingapore.sg </td> 
+                            <td id="phone"> 081103245 </td> 
+                            <td id="description"> {trimText('The merlion park isadnhasklndsjklandsajndksjandkjsandskjandkasjndkjsandskjandksjadnskjandkajsndkjsandkjasndkjasnkdjasasdsadsad ')}</td> 
+                            <td>
+                              <button id="btnEditTimeTours" type="button" class="btn btn-info">EDIT</button>
+                            </td> 
+                            <td id="image">
+                              <image style={{width:200,height:130,maxWidth:"none"}} src="/static/image/tours/image-1622520054816-688584648.jpeg"></image>
+                            </td>
+                            <td>
+                                <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
+                                  <form>
+                                    <button id="btnUpdate" type="button" class="btn btn-warning">UPDATE</button>
+                                  </form>
+                                  <form action="/api/tours/delete/1" method="POST">
+                                    <button type="submit" class="btn btn-danger">DELETE</button>
+                                  </form>
                                 </div>
                             </td>
                           </tr> 
@@ -280,6 +599,8 @@ function Tours(props) {
       <script src="static/assets/js/plugins/chartjs.min.js"></script>
       <script src="static/assets/js/plugins/bootstrap-notify.js"></script>
       <script src="static/assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>
+      <script src="static/assets/clockpicker/bootstrap-clockpicker.min.js" type="text/javascript"></script>
+      <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>
       <script src="static/assets/tours.js" type="text/javascript"></script>
       </html>
   );
