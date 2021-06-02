@@ -2,7 +2,7 @@ var React = require('react');
 var Sidebar = require("./components/Sidebar");
 
 
-function LocalReview(props) {
+function Precinct(props) {
   return (
       <html>
       <head>
@@ -13,13 +13,10 @@ function LocalReview(props) {
       <link href="static/assets/css/bootstrap.min.css" rel="stylesheet" />
       <link href="static/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
       <link href="static/assets/demo/demo.css" rel="stylesheet" />
-      <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet"/>
-      <link href="static/assets/clockpicker/bootstrap-clockpicker.min.css" rel="stylesheet" />
-      <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css"/>
       </head>
       <body>
         <div className="wrapper ">
-          <Sidebar selected="localreview"/>
+          <Sidebar selected="precinct"/>
           <div className="main-panel" style={{height: '100vh'}}>
             <nav className="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
               <div className="container-fluid">
@@ -31,7 +28,7 @@ function LocalReview(props) {
                       <span className="navbar-toggler-bar bar3" />
                     </button>
                   </div>
-                  <a className="navbar-brand" href="javascript:;">Local Review</a>
+                  <a className="navbar-brand" href="javascript:;">Precinct</a>
                 </div>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                   <span className="navbar-toggler-bar navbar-kebab" />
@@ -205,11 +202,9 @@ function LocalReview(props) {
                             <thead class=" text-primary"> 
                             <tr>
                                 <th> No</th> 
-                                <th> Related Tours</th> 
-                                <th> User</th> 
-                                <th> Quote</th> 
-                                <th> Why Should Visit</th>
-                                <th> Special Tip </th>
+                                <th> Precinct Name</th> 
+                                <th> Description</th> 
+                                <th> Tours</th> 
                                 <th> Action </th>
                             </tr>
                             </thead> 
@@ -217,11 +212,11 @@ function LocalReview(props) {
                             <tr> 
                                 
                                 <td data-id="21398129sa21398127938" id="no"> 1 </td> 
-                                <td id="tours">Merlion Park</td> 
-                                <td id="user"> Samantha Kwan</td>
-                                <td id="quote">Feel the wind of ... in this place.</td>
-                                <td id="whyshouldvisit">Feel the wind of ... in this place. Why should visit</td>
-                                <td id="specialtip">Feel the wind of ... in this place. special Tip</td>
+                                <td id="precinct">Chinatown</td> 
+                                <td id="description">asdasdsafmsaiofnaiofnsaifnsaofnaofiniaofnsainasoinfasonfaasf</td>
+                                <td id="tours">
+                                    <button type="button" class="btn btn-danger">DETAIL TOURS</button>
+                                </td>
                                 <td>
                                     <div id="contentUpdateSpotlights" style={{display:"none"}}>asdasdsadasdasd</div>
                                     <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
@@ -243,7 +238,7 @@ function LocalReview(props) {
           </div>
         </div>
         </body>
-        <script src="static/assets/js/core/jquery.min.js"></script>
+      <script src="static/assets/js/core/jquery.min.js"></script>
       <script src="static/assets/js/core/popper.min.js"></script>
       <script src="static/assets/js/core/bootstrap.min.js"></script>
       <script src="static/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
@@ -251,14 +246,11 @@ function LocalReview(props) {
       <script src="static/assets/js/plugins/chartjs.min.js"></script>
       <script src="static/assets/js/plugins/bootstrap-notify.js"></script>
       <script src="static/assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>
-      <script src="static/assets/clockpicker/bootstrap-clockpicker.min.js" type="text/javascript"></script>
-      <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
       <script src="static/assets/localreview.js" type="text/javascript"></script>
       </html>
   );
 }
 
-module.exports = LocalReview;
+module.exports = Precinct;
 
 

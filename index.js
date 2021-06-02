@@ -59,6 +59,11 @@ app.get("/localreview", async(req,res)=>{
     res.render("LocalReview", {message:message[0], class:message[1]});
 })
 
+app.get("/precinct", async(req,res)=>{
+    let message = req.flash("message");
+    res.render("Precinct", {message:message[0], class:message[1]});
+})
+
 const server = app.listen(8000,()=>{
     console.log("listen to 8000");
 })
