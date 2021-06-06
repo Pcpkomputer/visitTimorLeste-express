@@ -16,7 +16,7 @@ $(document).on("click","#btnUpdate",(e)=>{
     let row = e.target.parentNode.parentNode.parentNode.parentNode;
     
 
-    let html = row.querySelector("#contentUpdateSpotlights").innerHTML;
+    let html = row.querySelector("#contentUpdateSpotlights").getAttribute("data-content");
 
     document.querySelector("#containerTextAreaSpotlight2").innerHTML=`
         <label for="exampleFormControlSelect1">Content</label>

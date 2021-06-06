@@ -197,7 +197,7 @@ function Spotlights(props) {
                                     <image style={{width:200,height:130,maxWidth:"none"}} src="/static/image/spotlights/mike.jpg"></image>
                                 </td>
                                 <td>
-                                    <div id="contentUpdateSpotlights" style={{display:"none"}}>asdasdsadasdasd</div>
+                                    <div id="contentUpdateSpotlights" data-content={`<p>tes123</p>`} style={{display:"none"}}></div>
                                     <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
                                     <form>
                                         <button id="btnUpdate" type="button" data-toggle="modal" data-target="#updateSpotlightsModal" class="btn btn-warning">UPDATE</button>

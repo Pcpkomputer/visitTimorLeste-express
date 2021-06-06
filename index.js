@@ -8,6 +8,7 @@ const session = require("express-session");
 const fileUpload = require('express-fileupload');
 
 const ToursControllers = require("./controllers/ToursControllers");
+const PrecinctControllers = require("./controllers/PrecinctControllers");
 
 const app = express();
 
@@ -33,6 +34,10 @@ app.use(bodyParser.json());
 ///// ROUTE TOURS //////
 app.use(ToursControllers);
 ///////////////////////
+///// ROUTE PRECINCT //////
+app.use(PrecinctControllers);
+///////////////////////
+
 
 app.get("/",async (req,res)=>{
     res.render("Dashboard");
@@ -62,6 +67,16 @@ app.get("/localreview", async(req,res)=>{
 app.get("/precinct", async(req,res)=>{
     let message = req.flash("message");
     res.render("Precinct", {message:message[0], class:message[1]});
+})
+
+app.get("/promotions", async(req,res)=>{
+    let message = req.flash("message");
+    res.render("Promotions", {message:message[0], class:message[1]});
+})
+
+app.get("/user", async(req,res)=>{
+    let message = req.flash("message");
+    res.render("User", {message:message[0], class:message[1]});
 })
 
 const server = app.listen(8000,()=>{
