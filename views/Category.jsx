@@ -80,7 +80,7 @@ function Category(props) {
                       <div class="modal-body">
                         <div class="form-group">
                           <label for="exampleFormControlInput1">Category Name</label>
-                          <input id="inputAddCategory" required name="id" type="text" class="form-control" placeholder="Category Name"/>
+                          <input id="inputAddCategory" required name="name" type="text" class="form-control" placeholder="Category Name"/>
                         </div>
                         <div class="form-group">
                             <button id="btnUploadImageCategory" type="button" class="btn btn-primary form-control">Upload Image</button>
@@ -148,23 +148,30 @@ function Category(props) {
                             </tr>
                             </thead> 
                             <tbody> 
-                            <tr> 
-                                <td data-id="21398129sa21398127938" id="no"> 1 </td> 
-                                <td id="name"> Attractions</td> 
-                                <td id="image">
-                                    <image style={{width:200,height:130,maxWidth:"none"}} src="/static/image/category/[an8-Yuukong] Sword Art Online Alicization - 24 [08C68E65].mkv_snapshot_01.09_[2020.09.20_06.07.04].jpg-1622529957710-183161681.jpg"></image>
-                                </td>
-                                <td>
-                                    <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
-                                    <form>
-                                        <button id="btnUpdate" type="button" data-toggle="modal" data-target="#updateCategoryModal" class="btn btn-warning">UPDATE</button>
-                                    </form>
-                                    <form action="/api/category/delete/1" method="POST">
-                                        <button type="submit" class="btn btn-danger">DELETE</button>
-                                    </form>
-                                    </div>
-                                </td>
-                            </tr> 
+                            {
+                              props.category.map((item,index)=>{
+                                return (
+                                  <tr> 
+                                      <td data-id={item.id_category} id="no"> {index+1} </td> 
+                                      <td id="name"> {item.category_name}</td> 
+                                      <td id="image">
+                                          <image style={{width:200,height:130,maxWidth:"none"}} src={`/static/image/category/${item.image}`}></image>
+                                      </td>
+                                      <td>
+                                          <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
+                                          <form>
+                                              <button id="btnUpdate" type="button" data-toggle="modal" data-target="#updateCategoryModal" class="btn btn-warning">UPDATE</button>
+                                          </form>
+                                          <form action={`/api/category/delete/${item.id_category}`} method="POST">
+                                              <button type="submit" class="btn btn-danger">DELETE</button>
+                                          </form>
+                                          </div>
+                                      </td>
+                                  </tr> 
+                                )
+                              })
+                            }
+                           
                             </tbody>
                          </table> 
                     </div>

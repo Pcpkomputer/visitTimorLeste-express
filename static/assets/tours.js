@@ -17,9 +17,16 @@ document.querySelector("#updateTimeToursModal #addUpdateTimeTours").addEventList
         let list = document.querySelectorAll("#updateTimeToursModal #rowAddToursTime");
 
         listDays = [];
+        payloadValue = [];
 
         list.forEach((item,_)=>{
             listDays.push(item.querySelectorAll("td")[0].innerHTML);
+
+            payloadValue.push({
+                days:item.querySelectorAll("td")[0].innerHTML,
+                from_time:item.querySelectorAll("td")[1].innerHTML,
+                to_time:item.querySelectorAll("td")[2].innerHTML
+            })
         })
 
 
@@ -27,6 +34,16 @@ document.querySelector("#updateTimeToursModal #addUpdateTimeTours").addEventList
             alert("Schedule already exist");
         }
         else{
+
+            document.querySelector("#updateTimeToursModal #updateTimeToursValue").value=JSON.stringify([
+                ...payloadValue,
+                {
+                    days:day,
+                    from_time:from,
+                    to_time:to
+                }
+            ]);
+
             document.querySelector("#updateTimeToursModal #contentAddTimeTours").innerHTML =
             document.querySelector("#updateTimeToursModal #contentAddTimeTours").innerHTML+
             `
@@ -48,13 +65,17 @@ $(document).on("click","#btnEditTimeTours",async (e)=>{
 
     document.querySelector("#loadingIndicatorUpdateTimeTours").style.display="flex";
 
-    let row = e.currentTarget.parentNode.parentNode.parentNode.parentNode;
+    let row = e.currentTarget.parentNode.parentNode;
     let id =  row.querySelectorAll("td")[0].getAttribute("data-id");
 
     let result = await fetch(`/api/tours/${id}/schedule`);
     let body = await result.json();
 
     document.querySelector("#updateTimeToursModal").action=`/api/tours/${id}/schedule/update`;
+
+
+    document.querySelector("#updateTimeToursModal #updateTimeToursValue").value=JSON.stringify(body);
+
     
     let payload = "";
 
@@ -62,8 +83,8 @@ $(document).on("click","#btnEditTimeTours",async (e)=>{
         payload+=`
         <tr id="rowAddToursTime">
             <td>${item.days}</td>
-            <td>${item.from}</td>
-            <td>${item.to}</td>
+            <td>${item.from_time}</td>
+            <td>${item.to_time}</td>
             <td>
                 <button class="btn btn-primary" id="btnDeleteRowsTime" type="button">Delete</button>
             </td>
@@ -150,6 +171,9 @@ $(document).on("click","#btnUpdate",(e)=>{
     let row = e.target.parentNode.parentNode.parentNode.parentNode;
 
 
+    let idcategory = row.querySelector("#category").getAttribute("data-id");
+
+
     let list = row.querySelectorAll("td");
 
     let filteredList = [
@@ -176,6 +200,7 @@ $(document).on("click","#btnUpdate",(e)=>{
         item.value=filteredList[i];
     })
 
+    document.querySelector("#updateToursModal .categoryvalue").value=parseInt(idcategory);
     document.querySelector("#previewToursImageUpdate").src=filteredList[7];
     document.querySelector("#inputToursImageUpdate").value=filteredList[7];
 
@@ -221,4 +246,19 @@ $(document).on("click","#addToursModal #addTimeTours",(e)=>{
 
 $(document).on("click","#btnDeleteRowsTime",(e)=>{
     e.currentTarget.parentNode.parentNode.outerHTML=""
+
+    let list = document.querySelectorAll("#updateTimeToursModal #rowAddToursTime");
+
+    payloadValue = [];
+
+    list.forEach((item,_)=>{
+        payloadValue.push({
+            days:item.querySelectorAll("td")[0].innerHTML,
+            from_time:item.querySelectorAll("td")[1].innerHTML,
+            to_time:item.querySelectorAll("td")[2].innerHTML
+        })
+    })
+
+    document.querySelector("#updateTimeToursModal #updateTimeToursValue").value=JSON.stringify(payloadValue);
+
 })

@@ -7,11 +7,17 @@ var Sidebar = require("./components/Sidebar");
 function Tours(props) {
 
   let trimText = (text)=>{
-     let str = '';
-     for(let i=0;i<50;i++){
-       str+=text[i];
-     }
-     return str+"...";
+    if(text.length>=50){
+      let str = '';
+      for(let i=0;i<50;i++){
+        str+=text[i];
+      }
+      return str+"...";
+    }
+    else{
+      return text;
+    }
+  
   }
 
   return (
@@ -98,14 +104,13 @@ function Tours(props) {
                               <div class="form-group">
                                 <label for="exampleFormControlSelect1">Category</label>
                                 <select required name="category" class="form-control" id="exampleFormControlSelect1">
-                                  <option>Promotions</option>
-                                  <option>Attractions</option>
-                                  <option>Accomodations</option>
-                                  <option>Food & Beverages</option>
-                                  <option>Bars & Clubs</option>
-                                  <option>Malls & Shops</option>
-                                  <option>Tours</option>
-                                  <option>Events</option>
+                                    {
+                                      props.category.map((item,index)=>{
+                                        return (
+                                          <option value={item.id_category}>{item.category_name}</option>
+                                        )
+                                      })
+                                    }
                                 </select>
                               </div>
                               <div class="form-group">
@@ -141,7 +146,7 @@ function Tours(props) {
                                   <div style={{flex:1,paddingRight:20}}>
                                     <div class="form-group">
                                       <label for="exampleFormControlInput1">Days</label>
-                                      <select id="dayTimeInputAdd" required name="category" class="form-control">
+                                      <select id="dayTimeInputAdd" required class="form-control">
                                         <option value="Sunday">Sunday</option>
                                         <option value="Monday">Monday</option>
                                         <option value="Tuesday">Tuesday</option>
@@ -228,15 +233,14 @@ function Tours(props) {
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlSelect1">Category</label>
-                          <select id="inputUpdateTours" required name="category" class="form-control" >
-                                <option>Promotions</option>
-                                  <option>Attractions</option>
-                                  <option>Accomodations</option>
-                                  <option>Food & Beverages</option>
-                                  <option>Bars & Clubs</option>
-                                  <option>Malls & Shops</option>
-                                  <option>Tours</option>
-                                  <option>Events</option>
+                          <select id="inputUpdateTours" name="category" required class="form-control categoryvalue" >
+                              {
+                                props.category.map((item,index)=>{
+                                  return (
+                                    <option value={item.id_category}>{item.category_name}</option>
+                                  )
+                                })
+                              }
                           </select>
                         </div>
                         <div class="form-group">
@@ -298,7 +302,7 @@ function Tours(props) {
                                   <div style={{flex:1,paddingRight:20}}>
                                     <div class="form-group">
                                       <label for="exampleFormControlInput1">Days</label>
-                                      <select id="dayTimeInputAdd" required name="category" class="form-control">
+                                      <select id="dayTimeInputAdd" required class="form-control">
                                         <option value="Sunday">Sunday</option>
                                         <option value="Monday">Monday</option>
                                         <option value="Tuesday">Tuesday</option>
@@ -355,6 +359,7 @@ function Tours(props) {
                                       </tbody>
                                 </table>
                             </div>
+                            <input id="updateTimeToursValue" name="time" style={{display:"none"}} type="text"></input>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -383,206 +388,39 @@ function Tours(props) {
                           </tr>
                         </thead> 
                         <tbody> 
-                          <tr> 
-                            <td data-id={"21398129sa21398127938"} id="no"> 1 </td> 
-                            <td id="category"> Attractions </td> 
-                            <td id="name"> Merlion Park </td> 
-                            <td id="address"> 1 Fullerton Road Singapore 049213 </td> 
-                            <td id="website"> http://visitsingapore.sg </td> 
-                            <td id="phone"> 081103245 </td> 
-                            <td id="description"> {trimText('The merlion park isadnhasklndsjklandsajndksjandkjsandskjandkasjndkjsandskjandksjadnskjandkajsndkjsandkjasndkjasnkdjasasdsadsad ')}</td> 
-                            <td>
-                              <button id="btnEditTimeTours" type="button" class="btn btn-info">EDIT</button>
-                            </td> 
-                            <td id="image">
-                              <image style={{width:200,height:130,maxWidth:"none"}} src="/static/image/tours/image-1622520054816-688584648.jpeg"></image>
-                            </td>
-                            <td>
-                                <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
-                                  <form>
-                                    <button id="btnUpdate" type="button" class="btn btn-warning">UPDATE</button>
-                                  </form>
-                                  <form action="/api/tours/delete/1" method="POST">
-                                    <button type="submit" class="btn btn-danger">DELETE</button>
-                                  </form>
-                                </div>
-                            </td>
-                          </tr> 
-                          <tr> 
-                            <td data-id={"213981555555555555555555555"} id="no"> 1 </td> 
-                            <td id="category"> Promotions </td> 
-                            <td id="name"> Merlion Park </td> 
-                            <td id="address"> 1 Fullerton Road Singapore 049213 </td> 
-                            <td id="website"> http://visitsingapore.sg </td> 
-                            <td id="phone"> 081103245 </td> 
-                            <td id="description"> {trimText('The merlion park isadnhasklndsjklandsajndksjandkjsandskjandkasjndkjsandskjandksjadnskjandkajsndkjsandkjasndkjasnkdjasasdsadsad ')}</td> 
-                            <td>
-                              <button id="btnEditTimeTours" type="button" class="btn btn-info">EDIT</button>
-                            </td> 
-                            <td id="image">
-                              <image style={{width:200,height:130,maxWidth:"none"}} src="/static/image/tours/image-1622520054816-688584648.jpeg"></image>
-                            </td>
-                            <td>
-                                <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
-                                  <form>
-                                    <button id="btnUpdate" type="button" class="btn btn-warning">UPDATE</button>
-                                  </form>
-                                  <form action="/api/tours/delete/1" method="POST">
-                                    <button type="submit" class="btn btn-danger">DELETE</button>
-                                  </form>
-                                </div>
-                            </td>
-                          </tr> 
-                          <tr> 
-                            <td data-id={"213981555555555555555555555"} id="no"> 1 </td> 
-                            <td id="category"> Promotions </td> 
-                            <td id="name"> Merlion Park </td> 
-                            <td id="address"> 1 Fullerton Road Singapore 049213 </td> 
-                            <td id="website"> http://visitsingapore.sg </td> 
-                            <td id="phone"> 081103245 </td> 
-                            <td id="description"> {trimText('The merlion park isadnhasklndsjklandsajndksjandkjsandskjandkasjndkjsandskjandksjadnskjandkajsndkjsandkjasndkjasnkdjasasdsadsad ')}</td> 
-                            <td>
-                              <button id="btnEditTimeTours" type="button" class="btn btn-info">EDIT</button>
-                            </td> 
-                            <td id="image">
-                              <image style={{width:200,height:130,maxWidth:"none"}} src="/static/image/tours/image-1622520054816-688584648.jpeg"></image>
-                            </td>
-                            <td>
-                                <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
-                                  <form>
-                                    <button id="btnUpdate" type="button" class="btn btn-warning">UPDATE</button>
-                                  </form>
-                                  <form action="/api/tours/delete/1" method="POST">
-                                    <button type="submit" class="btn btn-danger">DELETE</button>
-                                  </form>
-                                </div>
-                            </td>
-                          </tr> 
-                          <tr> 
-                            <td data-id={"213981555555555555555555555"} id="no"> 1 </td> 
-                            <td id="category"> Promotions </td> 
-                            <td id="name"> Merlion Park </td> 
-                            <td id="address"> 1 Fullerton Road Singapore 049213 </td> 
-                            <td id="website"> http://visitsingapore.sg </td> 
-                            <td id="phone"> 081103245 </td> 
-                            <td id="description"> {trimText('The merlion park isadnhasklndsjklandsajndksjandkjsandskjandkasjndkjsandskjandksjadnskjandkajsndkjsandkjasndkjasnkdjasasdsadsad ')}</td> 
-                            <td>
-                              <button id="btnEditTimeTours" type="button" class="btn btn-info">EDIT</button>
-                            </td> 
-                            <td id="image">
-                              <image style={{width:200,height:130,maxWidth:"none"}} src="/static/image/tours/image-1622520054816-688584648.jpeg"></image>
-                            </td>
-                            <td>
-                                <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
-                                  <form>
-                                    <button id="btnUpdate" type="button" class="btn btn-warning">UPDATE</button>
-                                  </form>
-                                  <form action="/api/tours/delete/1" method="POST">
-                                    <button type="submit" class="btn btn-danger">DELETE</button>
-                                  </form>
-                                </div>
-                            </td>
-                          </tr> 
-                          <tr> 
-                            <td data-id={"213981555555555555555555555"} id="no"> 1 </td> 
-                            <td id="category"> Promotions </td> 
-                            <td id="name"> Merlion Park </td> 
-                            <td id="address"> 1 Fullerton Road Singapore 049213 </td> 
-                            <td id="website"> http://visitsingapore.sg </td> 
-                            <td id="phone"> 081103245 </td> 
-                            <td id="description"> {trimText('The merlion park isadnhasklndsjklandsajndksjandkjsandskjandkasjndkjsandskjandksjadnskjandkajsndkjsandkjasndkjasnkdjasasdsadsad ')}</td> 
-                            <td>
-                              <button id="btnEditTimeTours" type="button" class="btn btn-info">EDIT</button>
-                            </td> 
-                            <td id="image">
-                              <image style={{width:200,height:130,maxWidth:"none"}} src="/static/image/tours/image-1622520054816-688584648.jpeg"></image>
-                            </td>
-                            <td>
-                                <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
-                                  <form>
-                                    <button id="btnUpdate" type="button" class="btn btn-warning">UPDATE</button>
-                                  </form>
-                                  <form action="/api/tours/delete/1" method="POST">
-                                    <button type="submit" class="btn btn-danger">DELETE</button>
-                                  </form>
-                                </div>
-                            </td>
-                          </tr> 
-                          <tr> 
-                            <td data-id={"213981555555555555555555555"} id="no"> 1 </td> 
-                            <td id="category"> Promotions </td> 
-                            <td id="name"> Merlion Park </td> 
-                            <td id="address"> 1 Fullerton Road Singapore 049213 </td> 
-                            <td id="website"> http://visitsingapore.sg </td> 
-                            <td id="phone"> 081103245 </td> 
-                            <td id="description"> {trimText('The merlion park isadnhasklndsjklandsajndksjandkjsandskjandkasjndkjsandskjandksjadnskjandkajsndkjsandkjasndkjasnkdjasasdsadsad ')}</td> 
-                            <td>
-                              <button id="btnEditTimeTours" type="button" class="btn btn-info">EDIT</button>
-                            </td> 
-                            <td id="image">
-                              <image style={{width:200,height:130,maxWidth:"none"}} src="/static/image/tours/image-1622520054816-688584648.jpeg"></image>
-                            </td>
-                            <td>
-                                <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
-                                  <form>
-                                    <button id="btnUpdate" type="button" class="btn btn-warning">UPDATE</button>
-                                  </form>
-                                  <form action="/api/tours/delete/1" method="POST">
-                                    <button type="submit" class="btn btn-danger">DELETE</button>
-                                  </form>
-                                </div>
-                            </td>
-                          </tr> 
-                          <tr> 
-                            <td data-id={"213981555555555555555555555"} id="no"> 1 </td> 
-                            <td id="category"> Promotions </td> 
-                            <td id="name"> Merlion Park </td> 
-                            <td id="address"> 1 Fullerton Road Singapore 049213 </td> 
-                            <td id="website"> http://visitsingapore.sg </td> 
-                            <td id="phone"> 081103245 </td> 
-                            <td id="description"> {trimText('The merlion park isadnhasklndsjklandsajndksjandkjsandskjandkasjndkjsandskjandksjadnskjandkajsndkjsandkjasndkjasnkdjasasdsadsad ')}</td> 
-                            <td>
-                              <button id="btnEditTimeTours" type="button" class="btn btn-info">EDIT</button>
-                            </td> 
-                            <td id="image">
-                              <image style={{width:200,height:130,maxWidth:"none"}} src="/static/image/tours/image-1622520054816-688584648.jpeg"></image>
-                            </td>
-                            <td>
-                                <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
-                                  <form>
-                                    <button id="btnUpdate" type="button" class="btn btn-warning">UPDATE</button>
-                                  </form>
-                                  <form action="/api/tours/delete/1" method="POST">
-                                    <button type="submit" class="btn btn-danger">DELETE</button>
-                                  </form>
-                                </div>
-                            </td>
-                          </tr> 
-                          <tr> 
-                            <td data-id={"213981555555555555555555555"} id="no"> 1 </td> 
-                            <td id="category"> Promotions </td> 
-                            <td id="name"> Merlion Park </td> 
-                            <td id="address"> 1 Fullerton Road Singapore 049213 </td> 
-                            <td id="website"> http://visitsingapore.sg </td> 
-                            <td id="phone"> 081103245 </td> 
-                            <td id="description"> {trimText('The merlion park isadnhasklndsjklandsajndksjandkjsandskjandkasjndkjsandskjandksjadnskjandkajsndkjsandkjasndkjasnkdjasasdsadsad ')}</td> 
-                            <td>
-                              <button id="btnEditTimeTours" type="button" class="btn btn-info">EDIT</button>
-                            </td> 
-                            <td id="image">
-                              <image style={{width:200,height:130,maxWidth:"none"}} src="/static/image/tours/image-1622520054816-688584648.jpeg"></image>
-                            </td>
-                            <td>
-                                <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
-                                  <form>
-                                    <button id="btnUpdate" type="button" class="btn btn-warning">UPDATE</button>
-                                  </form>
-                                  <form action="/api/tours/delete/1" method="POST">
-                                    <button type="submit" class="btn btn-danger">DELETE</button>
-                                  </form>
-                                </div>
-                            </td>
-                          </tr> 
+                          {
+                            props.tours.map((item,index)=>{
+                                return (
+                                  <tr> 
+                                  <td data-id={item.id_tours} id="no"> {index+1} </td> 
+                                  <td data-id={item.id_category} id="category">{item.category_name}</td> 
+                                  <td id="name"> {item.name} </td> 
+                                  <td id="address"> {item.address} </td> 
+                                  <td id="website"> {item.website} </td> 
+                                  <td id="phone"> {item.phone} </td> 
+                                  <td id="description"> {trimText(item.description)}</td> 
+                                  <td>
+                                    <button id="btnEditTimeTours" type="button" class="btn btn-info">EDIT</button>
+                                  </td> 
+                                  <td id="image">
+                                    <image style={{width:200,height:130,maxWidth:"none"}} src={`/static/image/tours/${item.image}`}></image>
+                                  </td>
+                                  <td>
+                                      <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
+                                        <form>
+                                          <button id="btnUpdate" type="button" class="btn btn-warning">UPDATE</button>
+                                        </form>
+                                        <form action={`/api/tours/delete/${item.id_tours}`} method="POST">
+                                          <button type="submit" class="btn btn-danger">DELETE</button>
+                                        </form>
+                                      </div>
+                                  </td>
+                                </tr> 
+                                )
+                            })
+                          }
+                        
+                      
                         </tbody>
                     </table> 
                 </div>

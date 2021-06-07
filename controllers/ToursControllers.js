@@ -1,20 +1,68 @@
 const express = require("express");
 const multer = require('multer');
 const path = require("path");
+const promisify = require("util").promisify
+const fs = require("fs");
+
+const {getConnection} = require("../connection/db");
 
 const ToursControllers = express.Router();
 
 
 ToursControllers.get("/api/tours", async(req,res)=>{
-    res.send("get all tours");
+    try{
+        let connection = await getConnection();
+        let [row,fields] = await connection.execute("SELECT * FROM tours");
+        await connection.release();
+        res.json({
+            success:true,
+            data:row
+        });
+    }
+    catch(err){
+        res.status(400).json({
+            success:false,
+            error:err.message
+        })
+    }
+ 
 })
 
 ToursControllers.get("/api/tours/:id", async (req,res)=>{
-    res.send("get single tours");
+    try{
+        let connection = await getConnection();
+        let [row,fields] = await connection.execute("SELECT * FROM tours WHERE id_tours=?",[req.params.id]);
+        await connection.release();
+        res.json({
+            success:true,
+            data:row
+        });
+    }
+    catch(err){
+        res.status(400).json({
+            success:false,
+            error:err.message
+        })
+    }
 });
 
 ToursControllers.post("/api/tours/:id/schedule/update", async (req,res)=>{
-    res.send("update schedule");
+    let {
+        time
+    } = req.body;
+
+    let connection = await getConnection();
+    let q1 = await connection.execute("DELETE FROM schedule WHERE id_tours=?",[req.params.id]);
+    
+    let payload = JSON.parse(time).map((item,index)=>{
+        return [item.days,item.from_time,item.to_time,req.params.id];
+    })
+
+    let q2 = await connection.query("INSERT INTO schedule VALUES ?",[payload]);
+    await connection.release();
+
+    req.flash("message", ["Success updating schedule...","success"]);
+    res.redirect("/tours");
 })
 
 
@@ -22,18 +70,21 @@ ToursControllers.get("/api/tours/:id/schedule", async (req,res)=>{
     if(!req.params.id){
         res.status(200).send("Required ID");
     }else{
-        res.json([
-            // {
-            //     days:"Sunday",
-            //     from:"08:00",
-            //     to:"17:00"
-            // },
-            // {
-            //     days:"Monday",
-            //     from:"08:00",
-            //     to:"17:00"
-            // }
-        ])
+      try{
+        let koneksi = await getConnection();
+
+        let [schedule] = await koneksi.query("SELECT * FROM schedule WHERE id_tours=?",[req.params.id]);
+  
+        res.json(schedule);
+      }
+      catch(err){
+        res.status(400).json({
+            success:false,
+            error:err.message
+        })
+      }
+    
+      
     }
    
 });
@@ -52,15 +103,40 @@ ToursControllers.post("/api/tours/create", async (req,res)=>{
         } = req.body;
         let imagefilename = req.files.image.name;
 
+
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
         let filename = req.files.image.name + '-' + uniqueSuffix + "." + req.files.image.name.match(/[^\.]+$/)[0];
      
-        req.files.image.mv(path.join(__dirname, `../static/image/tours/${filename}`),(err)=>{
+        req.files.image.mv(path.join(__dirname, `../static/image/tours/${filename}`),async (err)=>{
             if(err){
                 res.status(200).send("There's problem save your image");
             }
             else{
-                res.send(schedule);
+                let connection = await getConnection();
+                let [q1] = await connection.query("INSERT INTO tours SET ?",{
+                    id_tours:null,
+                    id_category:category,
+                    name:name,
+                    address:address,
+                    website:website,
+                    phone:phone,
+                    description:description,
+                    image:filename
+                })
+
+                let payloadq2 = JSON.parse(schedule).map((item,_)=>{
+                    return [
+                        item.days,
+                        item.from,
+                        item.to,
+                        q1.insertId
+                    ]
+                })
+
+                let [q2] = await connection.query("INSERT INTO schedule (days,from_time,to_time,id_tours) VALUES ?",[payloadq2]);
+                await connection.release();
+                req.flash("message", ["Success creating tours...","success"]);
+                res.redirect("/tours");
             }
         })
       
@@ -70,18 +146,28 @@ ToursControllers.post("/api/tours/create", async (req,res)=>{
         res.redirect("/tours");
     }
 
-
-
 });
 
 ToursControllers.post("/api/tours/delete/:id",async(req,res)=>{
-    console.log(req.params.id);
-    res.send("delete");
+    try{
+        let koneksi = await getConnection();
+
+        let result = await koneksi.query("DELETE FROM tours WHERE id_tours=?",[req.params.id]);
+  
+        res.json({
+            success:true
+        })
+      }
+      catch(err){
+        res.status(400).json({
+            success:false,
+            error:err.message
+        })
+      }
 });
 
 ToursControllers.post("/api/tours/update/:id",async(req,res)=>{
     if(req.files){
-        console.log(req.params.id);
         let {
             category,
             name,
@@ -89,13 +175,37 @@ ToursControllers.post("/api/tours/update/:id",async(req,res)=>{
             website,
             phone,
             description,
-            schedule
         } = req.body;
         let imagefilename = req.files.image.name;
-        res.send("update with new image");
+
+
+        let conn = await getConnection();
+        let previous = await conn.query("SELECT * FROM tours WHERE id_tours=?",[req.params.id]);
+        if(fs.existsSync(path.join(__dirname, `../static/image/tours/${previous[0][0].image}`))){
+            await promisify(fs.unlink)(path.join(__dirname, `../static/image/tours/${previous[0][0].image}`))
+        }
+
+
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+        let filename = req.files.image.name + '-' + uniqueSuffix + "." + req.files.image.name.match(/[^\.]+$/)[0];
+        req.files.image.mv(path.join(__dirname, `../static/image/tours/${filename}`));    
+
+        let result = await conn.query("UPDATE tours SET ? WHERE id_tours=?",[{
+            id_category:category,
+            name:name,
+            address:address,
+            website:website,
+            phone:phone,
+            description:description,
+            image:filename
+        },req.params.id]);
+        await conn.release();
+        res.send({
+            success:true
+        });
+        
     }
     else{
-        console.log(req.params.id);
         let {
             category,
             name,
@@ -103,9 +213,21 @@ ToursControllers.post("/api/tours/update/:id",async(req,res)=>{
             website,
             phone,
             description,
-            schedule
         } = req.body;
-        res.send("update without new image");
+        
+        let conn = await getConnection();
+        let result = await conn.query("UPDATE tours SET ? WHERE id_tours=?",[{
+            id_category:category,
+            name:name,
+            address:address,
+            website:website,
+            phone:phone,
+            description:description,
+        },req.params.id]);
+        await conn.release();
+        res.send({
+            success:true
+        });
     }
 })
 

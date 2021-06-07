@@ -9,6 +9,10 @@ const fileUpload = require('express-fileupload');
 
 const ToursControllers = require("./controllers/ToursControllers");
 const PrecinctControllers = require("./controllers/PrecinctControllers");
+const CategoryControllers = require("./controllers/CategoryControllers");
+
+
+const {getConnection} = require("./connection/db");
 
 const app = express();
 
@@ -37,7 +41,9 @@ app.use(ToursControllers);
 ///// ROUTE PRECINCT //////
 app.use(PrecinctControllers);
 ///////////////////////
-
+///// ROUTE CATEGORY //////
+app.use(CategoryControllers);
+///////////////////////
 
 app.get("/",async (req,res)=>{
     res.render("Dashboard");
@@ -45,13 +51,27 @@ app.get("/",async (req,res)=>{
 
 
 app.get("/tours", async(req,res)=>{
+
+    let connection = await getConnection();
+    let [category] = await connection.execute("SELECT * FROM category");
+    let [tours] = await connection.execute("SELECT tours.*,category.id_category,category.category_name FROM tours INNER JOIN category ON category.id_category=tours.id_category");
+    await connection.release();
+
+    console.log(tours);
+
     let message = req.flash("message");
-    res.render("Tours", {message:message[0], class:message[1]});
+    res.render("Tours", {message:message[0], class:message[1],category:category,tours:tours});
 })
 
 app.get("/category", async(req,res)=>{
+
+    let connection = await getConnection();
+    let [category] = await connection.execute("SELECT * FROM category");
+    await connection.release();
+
+
     let message = req.flash("message");
-    res.render("Category", {message:message[0], class:message[1]});
+    res.render("Category", {message:message[0], class:message[1],category:category});
 })
 
 app.get("/spotlights", async(req,res)=>{
