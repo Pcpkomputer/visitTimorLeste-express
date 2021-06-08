@@ -4,7 +4,7 @@ var Sidebar = require("./components/Sidebar");
 
 function LocalReview(props) {
   return (
-      <html>
+      <html style={{backgroundColor:"#f4f3ef"}}>
       <head>
       <title>{props.title}</title>
       <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
@@ -57,7 +57,7 @@ function LocalReview(props) {
             </nav>
             <div className="content">
               <div className="row" style={{margin:0}}>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addLocalReviewModal">Add Local Review</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addLocalReviewModal">Update Local Review</button>
 
 
 
@@ -78,41 +78,39 @@ function LocalReview(props) {
                         </div>
                         <div class="form-group">
                                 <label for="exampleFormControlSelect1">Related Tours</label>
-                                <select id="inputAddLocalReview" required name="relatedtours" class="form-control">
-                                  <option>Promotions</option>
-                                  <option>Attractions</option>
-                                  <option>Accomodations</option>
-                                  <option>Food & Beverages</option>
-                                  <option>Bars & Clubs</option>
-                                  <option>Malls & Shops</option>
-                                  <option>Tours</option>
-                                  <option>Events</option>
+                                <select id="inputAddLocalReview" required name="relatedtours" class="form-control relatedtoursinput">
+                                  {
+                                    props.tours.map((item,index)=>{
+                                      return (
+                                        <option value={item.id_tours}>{item.name}</option>
+                                      )
+                                    })
+                                  }
                                 </select>
                         </div>
                         <div class="form-group">
                                 <label for="exampleFormControlSelect1">User</label>
-                                <select id="inputAddLocalReview" required name="relatedtours" class="form-control">
-                                  <option>Promotions</option>
-                                  <option>Attractions</option>
-                                  <option>Accomodations</option>
-                                  <option>Food & Beverages</option>
-                                  <option>Bars & Clubs</option>
-                                  <option>Malls & Shops</option>
-                                  <option>Tours</option>
-                                  <option>Events</option>
+                                <select id="inputAddLocalReview" required name="relateduser" class="form-control relateduserinput">
+                                  {
+                                    props.user.map((item,index)=>{
+                                        return (
+                                          <option value={item.id_user}>{item.name}</option>
+                                        )
+                                    })
+                                  }
                                 </select>
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlInput1">Quote</label>
-                          <input id="inputAddLocalReview" required name="id" type="text" class="form-control" placeholder="Quote"/>
+                          <input id="inputAddLocalReview" required name="quote" type="text" class="form-control" placeholder="Quote"/>
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlInput1">Why Should Visit</label>
-                          <textarea id="inputAddLocalReview" required name="id" type="text" class="form-control" placeholder="Why Should Visit"/>
+                          <textarea id="inputAddLocalReview" required name="whyshouldvisit" type="text" class="form-control" placeholder="Why Should Visit"/>
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlInput1">Special Tip</label>
-                          <textarea id="inputAddLocalReview" required name="id" type="text" class="form-control" placeholder="Special Tip"/>
+                          <textarea id="inputAddLocalReview" required name="specialtip" type="text" class="form-control" placeholder="Special Tip"/>
                         </div>
                       </div>
                       <div class="modal-footer">
@@ -141,40 +139,38 @@ function LocalReview(props) {
                         <div class="form-group">
                                 <label for="exampleFormControlSelect1">Related Tours</label>
                                 <select required name="relatedtours" class="form-control" id="exampleFormControlSelect1">
-                                  <option>Promotions</option>
-                                  <option>Attractions</option>
-                                  <option>Accomodations</option>
-                                  <option>Food & Beverages</option>
-                                  <option>Bars & Clubs</option>
-                                  <option>Malls & Shops</option>
-                                  <option>Tours</option>
-                                  <option>Events</option>
+                                {
+                                    props.tours.map((item,index)=>{
+                                      return (
+                                        <option value={item.id_tours}>{item.name}</option>
+                                      )
+                                    })
+                                  }
                                 </select>
                         </div>
                         <div class="form-group">
                                 <label for="exampleFormControlSelect1">User</label>
-                                <select required name="relatedtours" class="form-control" id="exampleFormControlSelect1">
-                                  <option>Promotions</option>
-                                  <option>Attractions</option>
-                                  <option>Accomodations</option>
-                                  <option>Food & Beverages</option>
-                                  <option>Bars & Clubs</option>
-                                  <option>Malls & Shops</option>
-                                  <option>Tours</option>
-                                  <option>Events</option>
+                                <select required name="relateduser" class="form-control" id="exampleFormControlSelect1">
+                                {
+                                    props.user.map((item,index)=>{
+                                        return (
+                                          <option value={item.id_user}>{item.name}</option>
+                                        )
+                                    })
+                                  }
                                 </select>
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlInput1">Quote</label>
-                          <input id="inputAddLocalReview" required name="id" type="text" class="form-control" placeholder="Quote"/>
+                          <input id="inputAddLocalReview" required name="quote" type="text" class="form-control" placeholder="Quote"/>
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlInput1">Why Should Visit</label>
-                          <textarea id="inputAddLocalReview" required name="id" type="text" class="form-control" placeholder="Why Should Visit"/>
+                          <textarea id="inputAddLocalReview" required name="whyshouldvisit" type="text" class="form-control" placeholder="Why Should Visit"/>
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlInput1">Special Tip</label>
-                          <textarea id="inputAddLocalReview" required name="id" type="text" class="form-control" placeholder="Special Tip"/>
+                          <textarea id="inputAddLocalReview" required name="specialtip" type="text" class="form-control" placeholder="Special Tip"/>
                         </div>
                       </div>
                       <div class="modal-footer">
@@ -214,26 +210,30 @@ function LocalReview(props) {
                             </tr>
                             </thead> 
                             <tbody> 
-                            <tr> 
-                                
-                                <td data-id="21398129sa21398127938" id="no"> 1 </td> 
-                                <td id="tours">Merlion Park</td> 
-                                <td id="user"> Samantha Kwan</td>
-                                <td id="quote">Feel the wind of ... in this place.</td>
-                                <td id="whyshouldvisit">Feel the wind of ... in this place. Why should visit</td>
-                                <td id="specialtip">Feel the wind of ... in this place. special Tip</td>
-                                <td>
-                                    <div id="contentUpdateSpotlights" style={{display:"none"}}>asdasdsadasdasd</div>
-                                    <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
-                                    <form>
-                                        <button id="btnUpdate" type="button" data-toggle="modal" data-target="#updateLocalReviewModal" class="btn btn-warning">UPDATE</button>
-                                    </form>
-                                    <form action="/api/localreview/delete/1" method="POST">
-                                        <button type="submit" class="btn btn-danger">DELETE</button>
-                                    </form>
-                                    </div>
-                                </td>
-                            </tr> 
+                              {
+                                props.localreview.map((item,index)=>{
+                                  return (
+                                    <tr> 
+                                        <td data-id={item.id_localreview} id="no"> {index+1} </td> 
+                                        <td data-id={item.id_tours} id="tours">{item.toursname}</td> 
+                                        <td data-id={item.id_user} id="user"> {item.username}</td>
+                                        <td id="quote">{item.quote}</td>
+                                        <td id="whyshouldvisit">{item.whyshouldvisit}</td>
+                                        <td id="specialtip">{item.specialtip}</td>
+                                        <td>
+                                            <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
+                                            <form>
+                                                <button id="btnUpdate" type="button" data-toggle="modal" data-target="#updateLocalReviewModal" class="btn btn-warning">UPDATE</button>
+                                            </form>
+                                            <form action={`/api/localreview/delete/${item.id_localreview}`} method="POST">
+                                                <button type="submit" class="btn btn-danger">DELETE</button>
+                                            </form>
+                                            </div>
+                                        </td>
+                                    </tr> 
+                                  )
+                                })
+                              }
                             </tbody>
                          </table> 
                     </div>    

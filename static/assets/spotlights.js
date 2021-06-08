@@ -18,9 +18,11 @@ $(document).on("click","#btnUpdate",(e)=>{
 
     let html = row.querySelector("#contentUpdateSpotlights").getAttribute("data-content");
 
+    let idrelatedtours = row.querySelector("#tours").getAttribute("data-id");
+
     document.querySelector("#containerTextAreaSpotlight2").innerHTML=`
         <label for="exampleFormControlSelect1">Content</label>
-        <textarea required style={{height:800}} id="textareaspotlights2"></textarea>    
+        <textarea required name="content" style={{height:800}} id="textareaspotlights2"></textarea>    
     `;
     
     $("#textareaspotlights2")[0].value=`${html}`;
@@ -57,7 +59,7 @@ $(document).on("click","#btnUpdate",(e)=>{
         item.value=filteredList[i];
     })
     
-
+    document.querySelector("#updateSpotlightsModal .relatedtoursinput").value=idrelatedtours;
     document.querySelector("#updateSpotlightsModal #previewSpotlightsImage").src=filteredList[3];
 
 })

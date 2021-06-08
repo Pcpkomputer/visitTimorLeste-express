@@ -4,7 +4,7 @@ var Sidebar = require("./components/Sidebar");
 
 function User(props) {
   return (
-      <html>
+      <html style={{backgroundColor:"#f4f3ef"}}>
       <head>
       <title>{props.title}</title>
       <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
@@ -139,7 +139,8 @@ function User(props) {
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button id="btnRealSubmit" type="submit" style={{display:"none"}} class="btn btn-primary">Submit</button>
+                        <button id="btnFakeSubmit" type="button" class="btn btn-primary">Submit</button>
                       </div>
                     </div>
                   </div>
@@ -261,36 +262,46 @@ function User(props) {
                             </tr>
                             </thead> 
                             <tbody> 
-                            <tr> 
-                                
-                                <td data-id="21398129sa21398127938" id="no"> 1 </td> 
-                                <td id="name">Padang Perwira Yudha</td> 
-                                <td id="type">Explorer</td>
-                                <td id="minitype">
-                                    <span class="badge bg-primary mr-2" style={{color:"white"}}>Vegan</span>
-                                    <span class="badge bg-primary mr-2"  style={{color:"white"}}>Defender</span>
-                                </td>
-                                <td id="aboutme">
-                                    iam a king
-                                </td>
-                                <td id="locals">
-                                    Yes
-                                </td>
-                                <td id="avatar">
-                                    <image style={{width:130,height:130,maxWidth:"none",borderRadius:999}} src="/static/image/category/[an8-Yuukong] Sword Art Online Alicization - 24 [08C68E65].mkv_snapshot_01.09_[2020.09.20_06.07.04].jpg-1622529957710-183161681.jpg"></image>
-                                </td>
-                                <td>
-                                    <div id="contentUpdateSpotlights" style={{display:"none"}}>asdasdsadasdasd</div>
-                                    <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
-                                    <form>
-                                        <button id="btnUpdate" type="button" data-toggle="modal" data-target="#updateUserModal" class="btn btn-warning">UPDATE</button>
-                                    </form>
-                                    <form action="/api/precinct/delete/1" method="POST">
-                                        <button type="submit" class="btn btn-danger">DELETE</button>
-                                    </form>
-                                    </div>
-                                </td>
-                            </tr> 
+                             {
+                               props.user.map((item,index)=>{
+                                 return (
+                                  <tr> 
+                                      <td data-id={item.id_user} id="no"> {index+1} </td> 
+                                      <td id="name">{item.name}</td> 
+                                      <td id="type">{item.type}</td>
+                                      <td id="minitype">
+                                         {
+                                           item.minitype.map((minitype,index)=>{
+                                             return (
+                                                <span class="badge bg-primary mr-2" style={{color:"white"}}>{minitype.trim()}</span>
+                                             )
+                                           })
+                                         }
+                                      </td>
+                                      <td id="aboutme">
+                                          {item.aboutme}
+                                      </td>
+                                      <td id="locals">
+                                          {item.locals}
+                                      </td>
+                                      <td id="avatar">
+                                          <image style={{width:130,height:130,maxWidth:"none",borderRadius:999}} src={`/static/image/user/${item.avatar}`}></image>
+                                      </td>
+                                      <td>
+                                          <div id="contentUpdateSpotlights" style={{display:"none"}}>asdasdsadasdasd</div>
+                                          <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
+                                          <form>
+                                              <button id="btnUpdate" type="button" data-toggle="modal" data-target="#updateUserModal" class="btn btn-warning">UPDATE</button>
+                                          </form>
+                                          <form action={`/api/user/delete/${item.id_user}`} method="POST">
+                                              <button type="submit" class="btn btn-danger">DELETE</button>
+                                          </form>
+                                          </div>
+                                      </td>
+                                  </tr> 
+                                 )
+                               })
+                             }
                             </tbody>
                          </table> 
                     </div>    

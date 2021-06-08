@@ -18,6 +18,9 @@ $(document).on("click","#btnUpdate",(e)=>{
         row.querySelector("td").getAttribute("data-id")
     ];
 
+    let idtours = row.querySelector("#tours").getAttribute("data-id");
+    let iduser =  row.querySelector("#user").getAttribute("data-id");
+
     list.forEach((el,i)=>{
         if(element.includes(el.id)){
             if(el.childNodes[0].localName==="img"){
@@ -33,9 +36,12 @@ $(document).on("click","#btnUpdate",(e)=>{
     document.querySelector("#updateLocalReviewModal").action=`api/localreview/update/${filteredList[0]}`;
   
 
-    let input = document.querySelectorAll("#inputAddLocalReview");
+    let input = document.querySelectorAll("#updateLocalReviewModal #inputAddLocalReview");
     input.forEach((item,i)=>{
         item.value=filteredList[i];
     })
+
+    document.querySelector("#updateLocalReviewModal .relateduserinput").value=iduser;
+    document.querySelector("#updateLocalReviewModal .relatedtoursinput").value=idtours;
     
 })

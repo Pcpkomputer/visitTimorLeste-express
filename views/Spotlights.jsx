@@ -13,7 +13,7 @@ function Spotlights(props) {
      }
 
   return (
-      <html>
+      <html style={{backgroundColor:"#f4f3ef"}}>
       <head>
       <title>{props.title}</title>
       <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
@@ -81,30 +81,28 @@ function Spotlights(props) {
                       <div class="modal-body">
                         <div class="form-group">
                           <label for="exampleFormControlInput1">Spotlights Title</label>
-                          <input id="inputAddCategory" required name="id" type="text" class="form-control" placeholder="Spotlights Title"/>
+                          <input id="inputAddCategory" required name="title" type="text" class="form-control" placeholder="Spotlights Title"/>
                         </div>
                         <div class="form-group">
                                 <label for="exampleFormControlSelect1">Related Tours</label>
                                 <select required name="relatedtours" class="form-control" id="exampleFormControlSelect1">
-                                  <option>Promotions</option>
-                                  <option>Attractions</option>
-                                  <option>Accomodations</option>
-                                  <option>Food & Beverages</option>
-                                  <option>Bars & Clubs</option>
-                                  <option>Malls & Shops</option>
-                                  <option>Tours</option>
-                                  <option>Events</option>
+                                  {
+                                        props.tours.map((item,index)=>{
+                                          return (
+                                            <option value={item.id_tours}>{item.name}</option>
+                                          )
+                                        })
+                                  }
                                 </select>
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlSelect1">Content</label>
-                            <textarea required style={{height:800}} id="textareaspotlights"></textarea>    
+                            <textarea required style={{height:800}} name="content" id="textareaspotlights"></textarea>    
                         </div>
                         <div class="form-group">
                                 <button id="btnUploadImageSpotlights" type="button" class="btn btn-primary form-control">Upload Image</button>
                                 <image id="previewSpotlightsImage" src="" style={{objectFit:"cover",backgroundColor:"whitesmoke",width:"100%",height:300,marginTop:15}}></image>
                                 <input required name="image" accept=".jpg,.png" style={{display:"none"}} id="inputSpotlightsImage" type="file"></input>
-                              
                         </div>
                       </div>
                       <div class="modal-footer">
@@ -135,24 +133,23 @@ function Spotlights(props) {
                             </div>
                             <div class="form-group">
                               <label for="exampleFormControlInput1">Spotlights Title</label>
-                              <input id="inputAddSpotlights" required name="id" type="text" class="form-control" placeholder="Spotlights Title"/>
+                              <input id="inputAddSpotlights" required name="title" type="text" class="form-control" placeholder="Spotlights Title"/>
                             </div>
                             <div class="form-group">
                                     <label for="exampleFormControlSelect1">Related Tours</label>
-                                    <select id="inputAddSpotlights" required name="relatedtours" class="form-control">
-                                      <option>Promotions</option>
-                                      <option value="Merlion Park">Merlion Park</option>
-                                      <option>Accomodations</option>
-                                      <option>Food & Beverages</option>
-                                      <option>Bars & Clubs</option>
-                                      <option>Malls & Shops</option>
-                                      <option>Tours</option>
-                                      <option>Events</option>
+                                    <select id="inputAddSpotlights" required name="relatedtours" class="form-control relatedtoursinput">
+                                      {
+                                        props.tours.map((item,index)=>{
+                                          return (
+                                            <option value={item.id_tours}>{item.name}</option>
+                                          )
+                                        })
+                                      }
                                     </select>
                             </div>
                             <div id="containerTextAreaSpotlight2" class="form-group">
                                 <label for="exampleFormControlSelect1">Content</label>
-                                <textarea required style={{height:800}} id="textareaspotlights2"></textarea>    
+                                <textarea required style={{height:800}} name="content" id="textareaspotlights2"></textarea>    
                             </div>
                             <div class="form-group">
                                     <button id="btnUploadImageSpotlights" type="button" class="btn btn-primary form-control">Upload Image</button>
@@ -187,27 +184,32 @@ function Spotlights(props) {
                             </tr>
                             </thead> 
                             <tbody> 
-                            <tr> 
-                                
-                                <td data-id="21398129sa21398127938" id="no"> 1 </td> 
-                                <td id="name"> The cruious case of the missing peranakan Treasurezzz </td> 
-                                <td id="tours"> Merlion Park</td>
-                                <td id="dateposted">2021-12-06 05:00:00</td>
-                                <td id="image">
-                                    <image style={{width:200,height:130,maxWidth:"none"}} src="/static/image/spotlights/mike.jpg"></image>
-                                </td>
-                                <td>
-                                    <div id="contentUpdateSpotlights" data-content={`<p>tes123</p>`} style={{display:"none"}}></div>
-                                    <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
-                                    <form>
-                                        <button id="btnUpdate" type="button" data-toggle="modal" data-target="#updateSpotlightsModal" class="btn btn-warning">UPDATE</button>
-                                    </form>
-                                    <form action="/api/spotlights/delete/1" method="POST">
-                                        <button type="submit" class="btn btn-danger">DELETE</button>
-                                    </form>
-                                    </div>
-                                </td>
-                            </tr> 
+                            {
+                              props.spotlights.map((item,index)=>{
+                                return (
+                                  <tr> 
+                                      <td data-id={item.id_spotlights} id="no">{index+1}</td> 
+                                      <td id="name"> {item.spotlights_title} </td> 
+                                      <td data-id={item.id_tours} id="tours"> {item.toursname}</td>
+                                      <td id="dateposted">{item.date_posted.toString()}</td>
+                                      <td id="image">
+                                          <image style={{width:200,height:130,maxWidth:"none"}} src={`/static/image/spotlights/${item.image}`}></image>
+                                      </td>
+                                      <td>
+                                          <div id="contentUpdateSpotlights" data-content={item.spotlights_content} style={{display:"none"}}></div>
+                                          <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
+                                          <form>
+                                              <button id="btnUpdate" type="button" data-toggle="modal" data-target="#updateSpotlightsModal" class="btn btn-warning">UPDATE</button>
+                                          </form>
+                                          <form action={`/api/spotlights/delete/${item.id_spotlights}`} method="POST">
+                                              <button type="submit" class="btn btn-danger">DELETE</button>
+                                          </form>
+                                          </div>
+                                      </td>
+                                  </tr> 
+                                );
+                              })
+                            }
                             </tbody>
                          </table> 
                     </div>

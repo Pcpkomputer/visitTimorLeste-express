@@ -13,7 +13,7 @@ function Category(props) {
      }
 
   return (
-      <html>
+      <html style={{backgroundColor:"#f4f3ef"}}>
       <head>
       <title>{props.title}</title>
       <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />

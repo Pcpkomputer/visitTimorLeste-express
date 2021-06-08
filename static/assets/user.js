@@ -4,21 +4,55 @@ $(document).on("keypress","#addUserModal .inputMiniType",(e)=>{
 
         let val = document.querySelector("#addUserModal .inputMiniType").value;
 
-        document.querySelector("#addUserModal #contentMiniType").innerHTML=
-        document.querySelector("#addUserModal #contentMiniType").innerHTML+
-        `<span id="badgeMiniType" class="badge bg-primary mr-2" style="color:white;cursor:pointer">${val}</span>`;
+        
+        if(val.length>0){
+            document.querySelector("#addUserModal #contentMiniType").innerHTML=
+            document.querySelector("#addUserModal #contentMiniType").innerHTML+
+            `<span id="badgeMiniType" class="badge bg-primary mr-2" style="color:white;cursor:pointer">${val}</span>`;
+    
+            document.querySelector("#addUserModal .inputMiniType").value=``;
+    
+            let listbadge = document.querySelectorAll("#addUserModal #badgeMiniType");
+            listbadge_ = [];
+            listbadge.forEach((el,i)=>{
+                listbadge_.push(el.innerHTML);
+            })
+            document.querySelector("#addUserModal #miniTypeInput").value=JSON.stringify(listbadge_);
+        }
 
-        document.querySelector("#addUserModal .inputMiniType").value=``;
-
-        let listbadge = document.querySelectorAll("#addUserModal #badgeMiniType");
-        listbadge_ = [];
-        listbadge.forEach((el,i)=>{
-            listbadge_.push(el.innerHTML);
-        })
-        document.querySelector("#addUserModal #miniTypeInput").value=JSON.stringify(listbadge_);
+      
     }
 
 })
+
+
+$(document).on("keypress","#updateUserModal .inputMiniType",(e)=>{
+    if(e.charCode===13){
+        e.preventDefault();
+
+        let val = document.querySelector("#updateUserModal .inputMiniType").value;
+
+        
+        if(val.length>0){
+            document.querySelector("#updateUserModal #contentMiniType").innerHTML=
+            document.querySelector("#updateUserModal #contentMiniType").innerHTML+
+            `<span id="badgeMiniType" class="badge bg-primary mr-2" style="color:white;cursor:pointer">${val}</span>`;
+    
+            document.querySelector("#updateUserModal .inputMiniType").value=``;
+    
+            let listbadge = document.querySelectorAll("#updateUserModal #badgeMiniType");
+            listbadge_ = [];
+            listbadge.forEach((el,i)=>{
+                listbadge_.push(el.innerHTML);
+            })
+            document.querySelector("#updateUserModal #miniTypeInput").value=JSON.stringify(listbadge_);
+        }
+
+      
+    }
+
+})
+
 
 $(document).on("click","#addUserModal #badgeMiniType", (e)=>{
     e.currentTarget.outerHTML="";
@@ -28,6 +62,17 @@ $(document).on("click","#addUserModal #badgeMiniType", (e)=>{
             listbadge_.push(el.innerHTML);
         })
     document.querySelector("#addUserModal #miniTypeInput").value=JSON.stringify(listbadge_);
+})
+
+
+$(document).on("click","#updateUserModal #badgeMiniType", (e)=>{
+    e.currentTarget.outerHTML="";
+    let listbadge = document.querySelectorAll("#updateUserModal #badgeMiniType");
+        listbadge_ = [];
+        listbadge.forEach((el,i)=>{
+            listbadge_.push(el.innerHTML);
+        })
+    document.querySelector("#updateUserModal #miniTypeInput").value=JSON.stringify(listbadge_);
 })
 
 
@@ -60,6 +105,27 @@ $(document).on("change","#addUserModal #inputUserImage",(e)=>{
         }
     }
 })
+
+
+
+$(document).on("click", "#updateUserModal #btnUploadImageUser",()=>{
+    document.querySelector("#updateUserModal #inputUserImage").click();
+})
+$(document).on("change","#updateUserModal #inputUserImage",(e)=>{
+    if(e.currentTarget.files.length>0){
+        let file = e.currentTarget.files[0];
+        if(file.name.match(/(.jpg$|.png$)/)){
+            let url = URL.createObjectURL(file);
+            document.querySelector("#updateUserModal #previewUserImage").src=url;
+        }
+        else{
+            document.querySelector("#updateUserModal #inputUserImage").value="";
+            document.querySelector("#updateUserModal #previewUserImage").src="";
+            alert("Masukkan file dengan tipe data .jpg atau .png");
+        }
+    }
+})
+
 
 
 $(document).on("click","#btnUpdate",(e)=>{
@@ -111,4 +177,14 @@ $(document).on("click","#btnUpdate",(e)=>{
     document.querySelector("#updateUserModal #contentMiniType").innerHTML=badgehtml;
 
     document.querySelector("#updateUserModal #miniTypeInput").value=JSON.stringify(listbadge);
+})
+
+$(document).on("click","#updateUserModal #btnFakeSubmit",(e)=>{
+    let listbadge = document.querySelectorAll("#updateUserModal #badgeMiniType");
+    if(listbadge.length===0){
+        alert("Minitype must more than 1");
+    }
+    else{
+        document.querySelector("#updateUserModal #btnRealSubmit").click();
+    }
 })
