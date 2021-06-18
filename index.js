@@ -18,7 +18,6 @@ const {getConnection} = require("./connection/db");
 
 const app = express();
 
-
 app.use(cookieParser('keyboard cat'));
 app.use(session({ cookie: { maxAge: 60000 }}));
 app.use(flash());
@@ -33,7 +32,6 @@ app.use('/static', express.static(path.join(__dirname, 'static')))
 
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json());
-
 
 
 
@@ -109,14 +107,13 @@ app.get("/localreview", async(req,res)=>{
 app.get("/precinct", async(req,res)=>{
 
     let connection = await getConnection();
+    let [precinct] = await connection.query("SELECT * FROM precinct");
     let [tours] = await connection.query("SELECT * FROM tours");
-
-    console.log(tours);
 
     await connection.release();
 
     let message = req.flash("message");
-    res.render("Precinct", {message:message[0], class:message[1], tours:tours});
+    res.render("Precinct", {message:message[0], class:message[1], tours:tours, precinct:precinct});
 })
 
 app.get("/promotions", async(req,res)=>{

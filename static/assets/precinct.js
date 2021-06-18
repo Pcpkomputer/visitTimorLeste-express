@@ -1,5 +1,100 @@
 let currentIndexCell = null;
 
+let currentID = null;
+
+$(document).on("click","#detailToursModal #btnSubmit",(e)=>{
+    e.preventDefault();
+    let list = Array.from(document.querySelectorAll("#detailToursModal #contentAddTours tr"));
+
+    if(list.length>0){
+        let payload = list.map((item,index)=>{
+            let row = item.querySelectorAll("td");
+            return {
+                id_precinct:currentID,
+                id_tours:row[0].innerHTML
+            }
+        });
+
+        document.querySelector("#detailToursModal #jsonvalue").value=JSON.stringify(payload);
+
+        document.querySelector("#detailToursModal").submit();
+    }
+    else{
+        alert("Tours must more than 0");
+    }
+})
+
+$(document).on("click","#detailToursModal #btnDeleteRow",(e)=>{
+    e.currentTarget.parentNode.parentNode.outerHTML="";
+})
+
+$(document).on("click","#detailToursModal #btnAddTours",()=>{
+    let index = document.querySelector("#detailToursModal .selectInputTours").value;
+    let name = document.querySelector("#detailToursModal .selectInputTours").options[document.querySelector("#detailToursModal .selectInputTours").selectedIndex].text;
+
+
+    let list = Array.from(document.querySelectorAll("#detailToursModal #contentAddTours tr"));
+
+    list = list.filter((el,_)=>{
+        let id = el.querySelectorAll("td")[0].innerHTML;
+        return id===index;
+    });
+
+    if(list.length>0){
+        alert("Duplicate tours...");
+    }
+    else{
+        document.querySelector("#detailToursModal #contentAddTours").innerHTML=
+        document.querySelector("#detailToursModal #contentAddTours").innerHTML+
+        `
+        <tr>
+            <td>${index}</td>
+            <td>${name}</td>
+            <td>
+                <button id="btnDeleteRow" type="button" class="btn btn-primary">Delete</button>
+            </td>
+        </tr>
+        `
+    }
+
+  
+
+})
+
+$(document).on("click","#btnDetailTours",async (e)=>{
+
+    let row = e.target.parentNode.parentNode;
+    let id = row.querySelectorAll("td")[0].getAttribute("data-id");
+
+    document.querySelector("#detailToursModal").action=`/api/precinct/${id}/tours/update`
+
+    currentID = id;
+
+    let listtours = await fetch(`/api/precinct/${id}/tours`);
+    listtours = await listtours.json();
+
+    document.querySelector("#detailToursModal #contentAddTours").innerHTML=``;
+
+    let html = ``;
+
+    listtours.forEach((item,index)=>{
+        html=html+
+        `
+        <tr>
+            <td>${item.id_tours}</td>
+            <td>${item.name}</td>
+            <td>
+                <button id="btnDeleteRow" type="button" class="btn btn-primary">Delete</button>
+            </td>
+        </tr>
+        `
+    })
+
+    document.querySelector("#detailToursModal #contentAddTours").innerHTML=html;
+    
+    document.querySelector("#detailToursModal #loadingIndicatorUpdateDetailTours").style.display="none";
+})
+
 $(document).on("click","#addPrecinctModal #btnFakeSubmit",(e)=>{
     let list = document.querySelectorAll("#addPrecinctModal #contentAddPrecinct #rowInputTours");
 
@@ -17,7 +112,7 @@ $(document).on("click","#addPrecinctModal #btnFakeSubmit",(e)=>{
         document.querySelector("#addPrecinctModal #btnRealSubmit").click();
     }
     else{
-        alert("Precinct must more than 0");
+        alert("Tours must more than 0");
     }
 })
 
@@ -96,7 +191,8 @@ $(document).on("click","#btnUpdate",(e)=>{
         item.value=filteredList[i];
     })
 
-    document.querySelector("#updatePrecinctModal #previewPrecinctImage").src=filteredList[3];
+
+    document.querySelector("#updatePrecinctModal #previewPrecinctImage").src=filteredList[4];
     
 })
 

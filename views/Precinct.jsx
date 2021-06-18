@@ -60,7 +60,7 @@ function Precinct(props) {
 
 
 
-                <form action="api/precinct/update/:id/tours" method="POST" encType="multipart/form-data" class="modal fade" id="detailToursModal" tabindex="-1" role="dialog" aria-labelledby="addToursModal" aria-hidden="true">
+                <form action="/api/precinct/:id/tours/update" method="POST" encType="multipart/form-data" class="modal fade" id="detailToursModal" tabindex="-1" role="dialog" aria-labelledby="addToursModal" aria-hidden="true">
                   
                        
                   <div class="modal-dialog" role="document">
@@ -94,6 +94,7 @@ function Precinct(props) {
                                 </select>
                                 <button id="btnAddTours" type="button" class="btn btn-primary" style={{margin:0}}>Add</button>
                           </div>
+                          <input id="jsonvalue" type="text" name="json" style={{display:"none"}}></input>
                           <table  class="table table-bordered table-hover" style={{marginTop:15}}>
                                       <thead>
                                         <tr>
@@ -108,7 +109,7 @@ function Precinct(props) {
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button id="btnSubmit" type="submit" class="btn btn-primary">UPDATE</button>
                       </div>
                     </div>
                   </div>
@@ -131,17 +132,21 @@ function Precinct(props) {
                         </button>
                       </div>
                       <div class="modal-body">
+                      <div class="form-group">
+                            <label for="exampleFormControlInput1">ID Precinct</label>
+                            <input id="inputAddPrecinct" readOnly required name="id" type="text" class="form-control" placeholder="Precinct Name"/>
+                        </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Precinct Name</label>
-                            <input id="inputAddPrecinct" required name="id" type="text" class="form-control" placeholder="Precinct Name"/>
+                            <input id="inputAddPrecinct" required name="name" type="text" class="form-control" placeholder="Precinct Name"/>
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlInput1">Mini Description</label>
-                          <input id="inputAddPrecinct" required name="id" type="text" class="form-control" placeholder="Mini Description"/>
+                          <input id="inputAddPrecinct" required name="minidescription" type="text" class="form-control" placeholder="Mini Description"/>
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlInput1">Description</label>
-                          <textarea id="inputAddPrecinct" required name="id" type="text" class="form-control" placeholder="Description"/>
+                          <textarea id="inputAddPrecinct" required name="description" type="text" class="form-control" placeholder="Description"/>
                         </div>
                         <div class="form-group">
                             <button id="btnUploadImagePrecinct" type="button" class="btn btn-primary form-control">Upload Image</button>
@@ -254,30 +259,35 @@ function Precinct(props) {
                             </tr>
                             </thead> 
                             <tbody> 
-                            <tr> 
-                                
-                                <td data-id="21398129sa21398127938" id="no"> 1 </td> 
-                                <td id="precinct">Chinatown</td> 
-                                <td id="minidescription">asdasdsafmsaiofnaiofnsaifnsaofnaofiniaofnsainasoinfasonfaasf</td>
-                                <td id="description">asdasdsafmsaiofnaiofnsaifnsaofnaofiniaofnsainasoinfasonfaasf</td>
-                                <td id="tours">
-                                    <button type="button" data-toggle="modal" data-target="#detailToursModal"  class="btn btn-danger">DETAIL TOURS</button>
-                                </td>
-                                <td id="image">
-                                    <image style={{width:200,height:130,maxWidth:"none"}} src="/static/image/category/[an8-Yuukong] Sword Art Online Alicization - 24 [08C68E65].mkv_snapshot_01.09_[2020.09.20_06.07.04].jpg-1622529957710-183161681.jpg"></image>
-                                </td>
-                                <td>
-                                    <div id="contentUpdateSpotlights" style={{display:"none"}}>asdasdsadasdasd</div>
-                                    <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
-                                    <form>
-                                        <button id="btnUpdate" type="button" data-toggle="modal" data-target="#updatePrecinctModal" class="btn btn-warning">UPDATE</button>
-                                    </form>
-                                    <form action="/api/precinct/delete/1" method="POST">
-                                        <button type="submit" class="btn btn-danger">DELETE</button>
-                                    </form>
-                                    </div>
-                                </td>
-                            </tr> 
+                              {
+                                props.precinct.map((item,index)=>{
+                                  return (
+                                    <tr>                             
+                                        <td data-id={item.id_precinct} id="no"> {index+1} </td> 
+                                        <td id="precinct">{item.precinct_name}</td> 
+                                        <td id="minidescription">{item.mini_description}</td>
+                                        <td id="description">{item.description}</td>
+                                        <td id="tours">
+                                            <button type="button" id="btnDetailTours" data-toggle="modal" data-target="#detailToursModal"  class="btn btn-danger">DETAIL TOURS</button>
+                                        </td>
+                                        <td id="image">
+                                            <image style={{width:200,height:130,maxWidth:"none"}} src={`/static/image/precinct/${item.image}`}></image>
+                                        </td>
+                                        <td>
+                                            <div id="contentUpdateSpotlights" style={{display:"none"}}>asdasdsadasdasd</div>
+                                            <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
+                                            <form>
+                                                <button id="btnUpdate" type="button" data-toggle="modal" data-target="#updatePrecinctModal" class="btn btn-warning">UPDATE</button>
+                                            </form>
+                                            <form action={`/api/precinct/delete/${item.id_precinct}`} method="POST">
+                                                <button type="submit" class="btn btn-danger">DELETE</button>
+                                            </form>
+                                            </div>
+                                        </td>
+                                    </tr> 
+                                  )
+                                })
+                              }
                             </tbody>
                          </table> 
                     </div>    
