@@ -107,8 +107,16 @@ app.get("/localreview", async(req,res)=>{
 })
 
 app.get("/precinct", async(req,res)=>{
+
+    let connection = await getConnection();
+    let [tours] = await connection.query("SELECT * FROM tours");
+
+    console.log(tours);
+
+    await connection.release();
+
     let message = req.flash("message");
-    res.render("Precinct", {message:message[0], class:message[1]});
+    res.render("Precinct", {message:message[0], class:message[1], tours:tours});
 })
 
 app.get("/promotions", async(req,res)=>{

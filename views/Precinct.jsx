@@ -84,9 +84,13 @@ function Precinct(props) {
                           <label for="exampleFormControlInput1">Tours</label>
                           <div style={{flexDirection:"row",display:"flex"}}>
                                 <select id="inputAddPrecinct" required name="relatedtours" style={{marginRight:15}} class="form-control selectInputTours">
-                                  <option value="1">Satu</option>
-                                  <option value="2">Dua</option>
-                                  <option value="3">Tiga</option>
+                                  {
+                                    props.tours.map((item,index)=>{
+                                      return (
+                                        <option value={item.id_tours}>{item.name}</option>
+                                      )
+                                    })
+                                  }
                                 </select>
                                 <button id="btnAddTours" type="button" class="btn btn-primary" style={{margin:0}}>Add</button>
                           </div>
@@ -170,26 +174,31 @@ function Precinct(props) {
                       <div class="modal-body">
                         <div class="form-group">
                           <label for="exampleFormControlInput1">Precinct Name</label>
-                          <input id="inputAddPrecinct" required name="id" type="text" class="form-control" placeholder="Precinct Name"/>
+                          <input id="inputAddPrecinct" required name="name" type="text" class="form-control" placeholder="Precinct Name"/>
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlInput1">Mini Description</label>
-                          <input id="inputAddPrecinct" required name="id" type="text" class="form-control" placeholder="Mini Description"/>
+                          <input id="inputAddPrecinct" required name="minidescription" type="text" class="form-control" placeholder="Mini Description"/>
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlInput1">Description</label>
-                          <textarea id="inputAddPrecinct" required name="id" type="text" class="form-control" placeholder="Description"/>
+                          <textarea id="inputAddPrecinct" required name="description" type="text" class="form-control" placeholder="Description"/>
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlInput1">Tours</label>
                           <div style={{flexDirection:"row",display:"flex"}}>
                                 <select id="inputAddPrecinct" required name="relatedtours" style={{marginRight:15}} class="form-control selectInputTours">
-                                  <option value="1">Satu</option>
-                                  <option value="2">Dua</option>
-                                  <option value="3">Tiga</option>
+                                  {
+                                    props.tours.map((item,index)=>{
+                                      return (
+                                        <option value={item.id_tours}>{item.name}</option>
+                                      )
+                                    })
+                                  }
                                 </select>
                                 <button id="btnAddTours" type="button" class="btn btn-primary" style={{margin:0}}>Add</button>
                           </div>
+                          <input type="text" style={{display:"none"}} id="jsonlisttours" name="listtours"></input>
                           <table  class="table table-bordered table-hover" style={{marginTop:15}}>
                                       <thead>
                                         <tr>
@@ -197,7 +206,7 @@ function Precinct(props) {
                                           <th scope="col">Tours Name</th>
                                         </tr>
                                       </thead>
-                                      <tbody id="contentAddTours">
+                                      <tbody id="contentAddPrecinct">
                                       </tbody>
                         </table>
                         <div class="form-group">
@@ -209,7 +218,8 @@ function Precinct(props) {
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" id="btnRealSubmit" style={{display:"none"}} class="btn btn-primary">Submit</button>
+                        <button type="submit" id="btnFakeSubmit" class="btn btn-primary">Submit</button>
                       </div>
                     </div>
                   </div>

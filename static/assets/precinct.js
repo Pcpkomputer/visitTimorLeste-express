@@ -1,3 +1,26 @@
+let currentIndexCell = null;
+
+$(document).on("click","#addPrecinctModal #btnFakeSubmit",(e)=>{
+    let list = document.querySelectorAll("#addPrecinctModal #contentAddPrecinct #rowInputTours");
+
+    let payloadjson = [];
+
+    list.forEach((el,index)=>{
+        let td = el.querySelectorAll("td");
+        let idtours = td[0].innerHTML;
+        payloadjson.push(idtours);
+    })
+
+    document.querySelector("#addPrecinctModal #jsonlisttours").value=JSON.stringify(payloadjson);
+
+    if(list.length>0){
+        document.querySelector("#addPrecinctModal #btnRealSubmit").click();
+    }
+    else{
+        alert("Precinct must more than 0");
+    }
+})
+
 $(document).on("click","#addPrecinctModal #btnAddTours",(e)=>{
     let id = document.querySelector('#addPrecinctModal .selectInputTours').value;
     let name = document.querySelector('#addPrecinctModal .selectInputTours');
@@ -16,8 +39,8 @@ $(document).on("click","#addPrecinctModal #btnAddTours",(e)=>{
     else{
         name = name.options[name.selectedIndex].innerHTML;
 
-        document.querySelector("#addPrecinctModal #contentAddTours").innerHTML=
-        document.querySelector("#addPrecinctModal #contentAddTours").innerHTML+
+        document.querySelector("#addPrecinctModal #contentAddPrecinct").innerHTML=
+        document.querySelector("#addPrecinctModal #contentAddPrecinct").innerHTML+
         `
         <tr id="rowInputTours">
             <td>${id}</td>
@@ -63,10 +86,12 @@ $(document).on("click","#btnUpdate",(e)=>{
         }
     })
 
+    currentIndexCell = filteredList[0];
+
     document.querySelector("#updatePrecinctModal").action=`api/precinct/update/${filteredList[0]}`;
   
 
-    let input = document.querySelectorAll("#inputAddPrecinct");
+    let input = document.querySelectorAll("#updatePrecinctModal #inputAddPrecinct");
     input.forEach((item,i)=>{
         item.value=filteredList[i];
     })

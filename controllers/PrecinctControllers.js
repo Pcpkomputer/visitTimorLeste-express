@@ -1,6 +1,7 @@
 const express = require("express");
 const multer = require('multer');
 const path = require("path");
+const { getConnection } = require("../connection/db");
 
 const PrecinctControllers = express.Router();
 
@@ -39,6 +40,38 @@ PrecinctControllers.get("/api/precinct/:id/tours", async (req,res)=>{
 });
 
 PrecinctControllers.post("/api/precinct/create", async (req,res)=>{
+    let {   
+        name,
+        minidescription,
+        description,
+        relatedtours,
+        listtours
+    } = req.body;
+
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    let filename = req.files.image.name + '-' + uniqueSuffix + "." + req.files.image.name.match(/[^\.]+$/)[0];
+    req.files.image.mv(path.join(__dirname, `../static/image/precinct/${filename}`));
+
+    let connection = await getConnection();
+    let query = await connection.query("INSERT INTO precinct SET ?",{
+        precinct_name:name,
+        mini_description:minidescription,
+        description:description,
+        image:filename
+    })
+
+
+    let insertedid = query[0].insertId;
+
+    let preprocessedlisttours = JSON.parse(listtours).map((item,index)=>{
+        return [insertedid,item];
+    })
+
+    console.log(preprocessedlisttours);
+
+    let insertlisttours = await connection.query("INSERT INTO precinct_tours VALUES ?",[preprocessedlisttours]);
+
+    await connection.release();
     res.send("create")
 
 });
