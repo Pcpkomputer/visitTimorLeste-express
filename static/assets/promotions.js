@@ -38,7 +38,7 @@ $(document).on("click","#btnUpdate",(e)=>{
     //     height:300
     // });    
 
-
+    let idrelatedtours = row.querySelector("#relatedtours").getAttribute("data-id");
 
     let list = row.querySelectorAll("td");
 
@@ -63,12 +63,13 @@ $(document).on("click","#btnUpdate",(e)=>{
 
     document.querySelector("#containerDescription").innerHTML=`
         <label for="exampleFormControlInput1">Description</label>
-        <textarea id="inputAddPromotions" required name="id" type="text" class="form-control descriptionnote" placeholder="Description"/>
+        <textarea  required name="description" type="text" class="form-control descriptionnote" placeholder="Description"/>
     `;
+
     
-    $("#containerDescription #inputAddPromotions.descriptionnote")[0].value=`${description}`;
+    $("#containerDescription .descriptionnote")[0].value=`${description}`;
     
-    $("#containerDescription #inputAddPromotions.descriptionnote").summernote({
+    $("#containerDescription .descriptionnote").summernote({
         height:300
     });    
 
@@ -78,12 +79,12 @@ $(document).on("click","#btnUpdate",(e)=>{
     
     document.querySelector("#containerRedemptionInstruction").innerHTML=`
             <label for="exampleFormControlInput1">Redemption Instruction</label>
-            <textarea id="inputAddPromotions" required name="id" type="text" class="form-control redemptioninstructionnote" placeholder="Redemption Instruction"/>
+            <textarea required name="redemptioninstruction" type="text" class="form-control redemptioninstructionnote" placeholder="Redemption Instruction"/>
     `;
     
-    $("#containerRedemptionInstruction #inputAddPromotions.redemptioninstructionnote")[0].value=`${redemptioninstruction}`;
+    $("#containerRedemptionInstruction .redemptioninstructionnote")[0].value=`${redemptioninstruction}`;
     
-    $("#containerRedemptionInstruction #inputAddPromotions.redemptioninstructionnote").summernote({
+    $("#containerRedemptionInstruction .redemptioninstructionnote").summernote({
         height:300
     });    
 
@@ -94,12 +95,12 @@ $(document).on("click","#btnUpdate",(e)=>{
       
     document.querySelector("#containerTermsAndConditions").innerHTML=`
         <label for="exampleFormControlInput1">Terms and Conditions</label>
-        <textarea id="inputAddPromotions" required name="id" type="text" class="form-control termsandconditionsnote" placeholder="Terms and Conditions"/>
+        <textarea required name="termsandconditions" type="text" class="form-control termsandconditionsnote" placeholder="Terms and Conditions"/>
     `;
     
-    $("#containerTermsAndConditions #inputAddPromotions.termsandconditionsnote")[0].value=`${termsandconditions}`;
+    $("#containerTermsAndConditions .termsandconditionsnote")[0].value=`${termsandconditions}`;
     
-    $("#containerTermsAndConditions #inputAddPromotions.termsandconditionsnote").summernote({
+    $("#containerTermsAndConditions .termsandconditionsnote").summernote({
         height:300
     });    
 
@@ -111,12 +112,12 @@ $(document).on("click","#btnUpdate",(e)=>{
 
     document.querySelector("#containerDisclaimer").innerHTML=`
             <label for="exampleFormControlInput1">Disclaimer</label>
-            <textarea id="inputAddPromotions" required name="id" type="text" class="form-control disclaimernote" placeholder="Disclaimer"/>
+            <textarea required name="disclaimer" type="text" class="form-control disclaimernote" placeholder="Disclaimer"/>
     `;
 
-    $("#containerDisclaimer #inputAddPromotions.disclaimernote")[0].value=`${disclaimer}`;
+    $("#containerDisclaimer .disclaimernote")[0].value=`${disclaimer}`;
 
-    $("#containerDisclaimer #inputAddPromotions.disclaimernote").summernote({
+    $("#containerDisclaimer .disclaimernote").summernote({
         height:300
     });    
 
@@ -131,6 +132,7 @@ $(document).on("click","#btnUpdate",(e)=>{
         item.value=filteredList[i];
     })
     
+    document.querySelector("#updatePromotionsModal .relatedtourselect").value=idrelatedtours;
 
 
 })

@@ -79,44 +79,43 @@ function Promotions(props) {
                         </div>
                        <div class="form-group">
                           <label for="exampleFormControlInput1">Promotions Name</label>
-                          <input id="inputAddPromotions" required name="id" type="text" class="form-control" placeholder="Promotions Name"/>
+                          <input id="inputAddPromotions" required name="name" type="text" class="form-control" placeholder="Promotions Name"/>
                         </div>
                         <div class="form-group">
                                 <label for="exampleFormControlSelect1">Related Tours</label>
-                                <select required name="relatedtours" class="form-control" id="inputAddPromotions">
-                                  <option>Promotions</option>
-                                  <option>Attractions</option>
-                                  <option>Accomodations</option>
-                                  <option>Food & Beverages</option>
-                                  <option>Bars & Clubs</option>
-                                  <option>Malls & Shops</option>
-                                  <option>Tours</option>
-                                  <option>Events</option>
+                                <select required name="relatedtours" class="form-control relatedtourselect" id="inputAddPromotions">
+                                  {
+                                    props.tours.map((item,index)=>{
+                                      return (
+                                        <option value={item.id_tours}>{item.name}</option>
+                                      )
+                                    })
+                                  }
                                 </select>
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlInput1">From Date</label>
-                          <input id="inputAddPromotions" required name="id" type="date" class="form-control"/>
+                          <input id="inputAddPromotions" required name="fromdate" type="date" class="form-control"/>
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlInput1">To Date</label>
-                          <input id="inputAddPromotions" required name="id" type="date" class="form-control"/>
+                          <input id="inputAddPromotions" required name="todate" type="date" class="form-control"/>
                         </div>
                         <div id="containerDescription" class="form-group">
                           <label for="exampleFormControlInput1">Description</label>
-                          <textarea id="inputAddPromotions" required name="id" type="text" class="form-control descriptionnote" placeholder="Description"/>
+                          <textarea id="inputAddPromotions" required name="description" type="text" class="form-control descriptionnote" placeholder="Description"/>
                         </div>
                         <div id="containerRedemptionInstruction" class="form-group">
                           <label for="exampleFormControlInput1">Redemption Instruction</label>
-                          <textarea id="inputAddPromotions" required name="id" type="text" class="form-control redemptioninstructionnote" placeholder="Redemption Instruction"/>
+                          <textarea id="inputAddPromotions" required name="redemptioninstruction" type="text" class="form-control redemptioninstructionnote" placeholder="Redemption Instruction"/>
                         </div>
                         <div id="containerTermsAndConditions" class="form-group">
                           <label for="exampleFormControlInput1">Terms and Conditions</label>
-                          <textarea id="inputAddPromotions" required name="id" type="text" class="form-control termsandconditionsnote" placeholder="Terms and Conditions"/>
+                          <textarea id="inputAddPromotions" required name="termsandconditions" type="text" class="form-control termsandconditionsnote" placeholder="Terms and Conditions"/>
                         </div>
                         <div id="containerDisclaimer" class="form-group">
                           <label for="exampleFormControlInput1">Disclaimer</label>
-                          <textarea id="inputAddPromotions" required name="id" type="text" class="form-control disclaimernote" placeholder="Disclaimer"/>
+                          <textarea id="inputAddPromotions" required name="disclaimer" type="text" class="form-control disclaimernote" placeholder="Disclaimer"/>
                         </div>
                       </div>
                       <div class="modal-footer">
@@ -144,44 +143,43 @@ function Promotions(props) {
                       <div class="modal-body">
                        <div class="form-group">
                           <label for="exampleFormControlInput1">Promotions Name</label>
-                          <input id="inputAddPromotions" required name="id" type="text" class="form-control" placeholder="Promotions Name"/>
+                          <input id="inputAddPromotions" required name="name" type="text" class="form-control" placeholder="Promotions Name"/>
                         </div>
                         <div class="form-group">
                                 <label for="exampleFormControlSelect1">Related Tours</label>
                                 <select required name="relatedtours" class="form-control" id="exampleFormControlSelect1">
-                                  <option>Promotions</option>
-                                  <option>Attractions</option>
-                                  <option>Accomodations</option>
-                                  <option>Food & Beverages</option>
-                                  <option>Bars & Clubs</option>
-                                  <option>Malls & Shops</option>
-                                  <option>Tours</option>
-                                  <option>Events</option>
+                                  {
+                                    props.tours.map((item,index)=>{
+                                      return (
+                                        <option value={item.id_tours}>{item.name}</option>
+                                      )
+                                    })
+                                  }
                                 </select>
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlInput1">From Date</label>
-                          <input id="inputAddPromotions" required name="id" type="date" class="form-control"/>
+                          <input id="inputAddPromotions" required name="fromdate" type="date" class="form-control"/>
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlInput1">To Date</label>
-                          <input id="inputAddPromotions" required name="id" type="date" class="form-control"/>
+                          <input id="inputAddPromotions" required name="todate" type="date" class="form-control"/>
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlInput1">Description</label>
-                          <textarea id="inputAddPromotions" required name="id" type="text" class="form-control descriptionnote" placeholder="Description"/>
+                          <textarea id="inputAddPromotions" required name="description" type="text" class="form-control descriptionnote" placeholder="Description"/>
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlInput1">Redemption Instruction</label>
-                          <textarea id="inputAddPromotions" required name="id" type="text" class="form-control redemptioninstructionnote" placeholder="Redemption Instruction"/>
+                          <textarea id="inputAddPromotions" required name="redemptioninstruction" type="text" class="form-control redemptioninstructionnote" placeholder="Redemption Instruction"/>
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlInput1">Terms and Conditions</label>
-                          <textarea id="inputAddPromotions" required name="id" type="text" class="form-control termsandconditionsnote" placeholder="Terms and Conditions"/>
+                          <textarea id="inputAddPromotions" required name="termsandconditions" type="text" class="form-control termsandconditionsnote" placeholder="Terms and Conditions"/>
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlInput1">Disclaimer</label>
-                          <textarea id="inputAddPromotions" required name="id" type="text" class="form-control disclaimernote" placeholder="Disclaimer"/>
+                          <textarea id="inputAddPromotions" required name="disclaimer" type="text" class="form-control disclaimernote" placeholder="Disclaimer"/>
                         </div>
                       </div>
                       <div class="modal-footer">
@@ -224,38 +222,48 @@ function Promotions(props) {
                             </tr>
                             </thead> 
                             <tbody> 
-                            <tr> 
-                                
-                                <td data-id="21398129sa21398127938" id="no"> 1 </td> 
-                                <td id="promotions">Merlion Park Free Ticket</td> 
-                                <td id="relatedtours"> Merlion Park</td>
-                                <td id="from">2021-05-21</td>
-                                <td id="to">2021-05-22</td>
-                                <td id="description">
-                                 <span style={{display:"none"}} id="content" data-content={`<b>Born in the sepia photographow show</b>`}></span>
-                                 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                                </td>
-                                <td id="redemptioninstruction">
-                                <span style={{display:"none"}} id="content" data-content={`<b>Born in the sepia photographow show</b>`}></span>
-                                  bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</td>
-                                <td id="termsandconditions">
-                                <span style={{display:"none"}} id="content" data-content={`<b>Born in the sepia photographow show</b>`}></span>
-                                  cccccccccccccccccccccccccccccccccccc</td>
-                                <td id="disclaimer">
-                                <span style={{display:"none"}} id="content" data-content={`<b>Born in the sepia photographow show</b>`}></span>
-                                  asdasdasdasdasdas</td>
-                                <td>
-                                    <div id="contentUpdateSpotlights" style={{display:"none"}}>asdasdsadasdasd</div>
-                                    <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
-                                    <form>
-                                        <button id="btnUpdate" type="button" data-toggle="modal" data-target="#updatePromotionsModal" class="btn btn-warning">UPDATE</button>
-                                    </form>
-                                    <form action="/api/promotions/delete/1" method="POST">
-                                        <button type="submit" class="btn btn-danger">DELETE</button>
-                                    </form>
-                                    </div>
-                                </td>
-                            </tr> 
+                            {
+                              props.promotions.map((item,index)=>{
+                                return (
+                                  <tr> 
+                                      <td data-id={item.id_promotions} id="no"> {index+1} </td> 
+                                      <td id="promotions">{item.promotions_name}</td> 
+                                      <td data-id={item.id_tours} id="relatedtours"> {item.toursname}</td>
+                                      <td id="from">{`${item.from_time.getFullYear()}-${item.from_time.getMonth()+1>9 ? item.from_time.getMonth()+1:'0'+(item.from_time.getMonth()+1)}-${item.from_time.getDate()}`}</td>
+                                      <td id="to">{`${item.to_time.getFullYear()}-${item.to_time.getMonth()+1>9 ? item.to_time.getMonth()+1:'0'+(item.to_time.getMonth()+1)}-${item.to_time.getDate()}`}</td>
+                                      <td id="description">
+                                        <span style={{display:"none"}} id="content" data-content={item.description}></span>
+                                        {item.description}
+                                      </td>
+                                      <td id="redemptioninstruction">
+                                      <span style={{display:"none"}} id="content" data-content={item.redemptioninstruction}></span>
+                                        {item.redemptioninstruction}
+                                        </td>
+                                      <td id="termsandconditions">
+                                      <span style={{display:"none"}} id="content" data-content={item.termsandconditions}></span>
+                                        {item.termsandconditions}
+                                        </td>
+                                      <td id="disclaimer">
+                                      <span style={{display:"none"}} id="content" data-content={item.disclaimer}></span>
+                                        {
+                                          item.disclaimer
+                                        }
+                                        </td>
+                                      <td>
+                                          <div id="contentUpdateSpotlights" style={{display:"none"}}>asdasdsadasdasd</div>
+                                          <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
+                                          <form>
+                                              <button id="btnUpdate" type="button" data-toggle="modal" data-target="#updatePromotionsModal" class="btn btn-warning">UPDATE</button>
+                                          </form>
+                                          <form action={`/api/promotions/delete/${item.id_promotions}`} method="POST">
+                                              <button type="submit" class="btn btn-danger">DELETE</button>
+                                          </form>
+                                          </div>
+                                      </td>
+                                  </tr> 
+                                )
+                              })
+                            }
                             </tbody>
                          </table> 
                     </div>    

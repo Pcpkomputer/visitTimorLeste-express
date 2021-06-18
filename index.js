@@ -10,9 +10,10 @@ const fileUpload = require('express-fileupload');
 const ToursControllers = require("./controllers/ToursControllers");
 const PrecinctControllers = require("./controllers/PrecinctControllers");
 const CategoryControllers = require("./controllers/CategoryControllers");
-const SpotlightsControllers = require("./controllers/SpotlightsController");
+const SpotlightsControllers = require("./controllers/SpotlightsControllers");
 const UserControllers = require("./controllers/UsersControllers");
 const LocalReviewControllers = require("./controllers/LocalReviewControllers");
+const PromotionsControllers = require("./controllers/PromotionsControllers");
 
 const {getConnection} = require("./connection/db");
 
@@ -52,6 +53,9 @@ app.use(UserControllers);
 ///////////////////////
 ///// ROUTE LOCAL REVIEW //////
 app.use(LocalReviewControllers);
+///////////////////////
+///// ROUTE PROMOTIONS //////
+app.use(PromotionsControllers);
 ///////////////////////
 
 app.get("/",async (req,res)=>{
@@ -117,8 +121,15 @@ app.get("/precinct", async(req,res)=>{
 })
 
 app.get("/promotions", async(req,res)=>{
+
+    let connection = await getConnection();
+
+    let [tours] = await connection.query("SELECT * FROM tours");
+    let [promotions] = await connection.query("SELECT promotions.*,tours.name as toursname FROM promotions INNER JOIN tours ON tours.id_tours=promotions.id_tours");
+
+    await connection.release();
     let message = req.flash("message");
-    res.render("Promotions", {message:message[0], class:message[1]});
+    res.render("Promotions", {message:message[0], class:message[1],tours:tours, promotions:promotions});
 })
 
 app.get("/user", async(req,res)=>{
