@@ -12,7 +12,8 @@ const ToursControllers = express.Router();
 ToursControllers.get("/api/tours", async(req,res)=>{
     try{
         let connection = await getConnection();
-        let [row,fields] = await connection.execute("SELECT * FROM tours");
+        let [row,fields] = await connection.execute(`SELECT tours.*, category.category_name 
+        FROM tours INNER JOIN category ON category.id_category=tours.id_category`);
         await connection.release();
         res.json({
             success:true,

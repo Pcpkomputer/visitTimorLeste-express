@@ -14,6 +14,7 @@ const SpotlightsControllers = require("./controllers/SpotlightsControllers");
 const UserControllers = require("./controllers/UsersControllers");
 const LocalReviewControllers = require("./controllers/LocalReviewControllers");
 const PromotionsControllers = require("./controllers/PromotionsControllers");
+const ExtraControllers = require("./controllers/ExtraControllers");
 
 const {getConnection} = require("./connection/db");
 
@@ -57,6 +58,10 @@ app.use(LocalReviewControllers);
 ///// ROUTE PROMOTIONS //////
 app.use(PromotionsControllers);
 ///////////////////////
+///// ROUTE EXTRA //////
+app.use(ExtraControllers);
+///////////////////////
+
 
 app.get("/",async (req,res)=>{
     res.render("Dashboard");

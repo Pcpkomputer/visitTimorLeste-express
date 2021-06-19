@@ -12,7 +12,15 @@ const LocalReviewControllers = express.Router();
 LocalReviewControllers.get("/api/localreview", async(req,res)=>{
     try{
         let connection = await getConnection();
-        let [row,fields] = await connection.execute("SELECT * FROM localreview");
+        let [row,fields] = await connection.execute(`SELECT user.name AS 
+        fullname, user.avatar, user.*,localreview.*,tours.id_tours,
+        tours.image AS toursimage, 
+        category.category_name, tours.name AS toursname FROM 
+        localreview INNER JOIN tours 
+        ON tours.id_tours=localreview.id_tours INNER JOIN category 
+        ON tours.id_category=category.id_category
+        INNER JOIN user ON localreview.id_user=user.id_user
+        `);
         await connection.release();
         res.json({
             success:true,
