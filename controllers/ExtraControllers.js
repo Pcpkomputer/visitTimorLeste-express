@@ -25,9 +25,11 @@ ExtraControllers.get("/api/gettoursprecinct/:idprecinct",async (req,res)=>{
     let connection = await getConnection();
 
     let [tours] = await connection.query(`SELECT precinct_tours.*,
-    tours.* 
+    tours.*,
+    category.category_name
     FROM precinct_tours INNER JOIN tours ON 
     tours.id_tours=precinct_tours.id_tours
+    INNER JOIN category ON tours.id_category=category.id_category
     WHERE precinct_tours.id_precinct=?`,[req.params.idprecinct]);
 
     await connection.release();
