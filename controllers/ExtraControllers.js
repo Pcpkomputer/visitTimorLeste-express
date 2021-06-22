@@ -12,8 +12,9 @@ ExtraControllers.get("/api/getpromotions/:idcategory",async (req,res)=>{
     let connection = await getConnection();
     
     let [promotions] = await connection.query(`
-    SELECT promotions.*, tours.* FROM promotions 
+    SELECT promotions.*, tours.image AS imagetours, tours.*,category.category_name FROM promotions 
     INNER JOIN tours ON tours.id_tours=promotions.id_tours
+    INNER JOIN category ON tours.id_category=category.id_category
     WHERE tours.id_category=?
     ;`,[req.params.idcategory])
 
