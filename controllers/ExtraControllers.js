@@ -37,6 +37,24 @@ ExtraControllers.get("/api/gettoursprecinct/:idprecinct",async (req,res)=>{
     res.json(tours);
 })
 
+ExtraControllers.get("/api/getrecommendationbyiduser/:iduser", async(req,res)=>{
+    let connection = await getConnection();
+
+    let [recommendation] = await connection.query(`SELECT localreview.*, tours.name AS toursname, 
+    tours.image AS toursimage,
+    category.category_name, category.id_category,
+    user.*
+    FROM localreview 
+    INNER JOIN tours ON tours.id_tours=localreview.id_tours 
+    INNER JOIN category ON category.id_category=tours.id_category
+    INNER JOIN user ON user.id_user=localreview.id_user
+    WHERE localreview.id_user=?`,[req.params.iduser]);
+
+
+    await connection.release();
+    res.json(recommendation);
+})
+
 ExtraControllers.get("/api/getdetailtours/:idtours", async(req,res)=>{
     let connection = await getConnection();
 
