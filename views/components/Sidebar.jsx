@@ -61,6 +61,12 @@ function SideBar(props){
               <p>USER</p>
             </a>
           </li>
+          <li className={`${(props.selected==="account") ? "active":""}`}>
+            <a href="account">
+              <i className="nc-icon nc-single-02" />
+              <p>ACCOUNT</p>
+            </a>
+          </li>
         </ul>
       </div>
     </div>

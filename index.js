@@ -15,6 +15,7 @@ const UserControllers = require("./controllers/UsersControllers");
 const LocalReviewControllers = require("./controllers/LocalReviewControllers");
 const PromotionsControllers = require("./controllers/PromotionsControllers");
 const ExtraControllers = require("./controllers/ExtraControllers");
+const AccountControllers = require("./controllers/AccountControllers");
 
 const {getConnection} = require("./connection/db");
 
@@ -57,6 +58,9 @@ app.use(LocalReviewControllers);
 ///////////////////////
 ///// ROUTE PROMOTIONS //////
 app.use(PromotionsControllers);
+///////////////////////
+///// ROUTE ACCOUNT //////
+app.use(AccountControllers);
 ///////////////////////
 ///// ROUTE EXTRA //////
 app.use(ExtraControllers);
@@ -135,6 +139,15 @@ app.get("/promotions", async(req,res)=>{
     await connection.release();
     let message = req.flash("message");
     res.render("Promotions", {message:message[0], class:message[1],tours:tours, promotions:promotions});
+})
+
+app.get("/account",async (req,res)=>{
+    let connection = await getConnection();
+
+    let [account] = await connection.query("SELECT * FROM account;");
+
+    await connection.release();
+    res.render("Account",{account:account});
 })
 
 app.get("/user", async(req,res)=>{
