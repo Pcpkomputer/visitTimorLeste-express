@@ -4,9 +4,124 @@ const path = require("path");
 const promisify = require("util").promisify
 const fs = require("fs");
 
+var jwt = require('jwt-simple');
+
 const {getConnection} = require("../connection/db");
 
 const ExtraControllers = express.Router();
+
+const {secret_key} = require("../env");
+
+ExtraControllers.post("/api/loginaccount", async(req,res)=>{
+    try {
+
+        let {
+            email:emailbody,
+            password:passwordbody
+        } = req.body;
+
+        let connection = await getConnection();
+
+        let [exist] = await connection.query("SELECT * FROM account WHERE email=?",[emailbody]);
+
+        if(exist.length>0){
+
+            let {
+                email,
+                password
+            } = exist[0];
+            
+            if(email===emailbody && password===passwordbody){
+                await connection.release();
+
+                let payload = {
+                    ...exist[0]
+                };
+
+                let token = jwt.encode(payload,secret_key);
+
+                res.json({
+                    success:true,
+                    token:token,
+                    data:payload
+                });
+            }
+            else{
+                await connection.release();
+                res.json({
+                    success:false,
+                    msg:"Login failed"
+                });
+            }
+          
+        }
+        else{
+            await connection.release();
+            res.json({
+                success:false,
+                msg:"Account not found"
+            });
+        }
+
+    } catch (error) {
+        res.json({
+            success:false,
+            msg:error.message
+        })
+    }
+})
+
+
+ExtraControllers.post("/api/registeraccount", async(req,res)=>{
+    try {
+        let {
+            firstname,
+            lastname,
+            email,
+            password
+        } = req.body;
+    
+        let connection = await getConnection();
+    
+        let [exist] = await connection.query("SELECT * FROM account WHERE email=?",[email]);
+        if(exist.length>0){
+            await connection.release();
+            res.json({
+                success:false,
+                msg:"Email already exist"
+            })
+        }
+        else{
+    
+            let insert = await connection.query("INSERT INTO account SET ?",[{
+                first_name:firstname,
+                last_name:lastname,
+                email:email,
+                password:password,
+                birthday:null
+            }])
+    
+            await connection.release();
+            res.json({
+                success:true,
+                data:{
+                    first_name:firstname,
+                    last_name:lastname,
+                    email:email,
+                    password:password,
+                    birthday:null
+                }
+            })
+        }   
+        
+    } catch (error) {
+        res.json({
+            success:false,
+            msg:error.message
+        })
+    }
+})
+
 
 ExtraControllers.get("/api/getpromotions/:idcategory",async (req,res)=>{
     let connection = await getConnection();

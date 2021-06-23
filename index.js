@@ -174,3 +174,7 @@ app.get("/user", async(req,res)=>{
 const server = app.listen(8000,()=>{
     console.log("listen to 8000");
 })
+
+server.on("error",()=>{
+    console.log("error happen");
+})
