@@ -12,6 +12,73 @@ const ExtraControllers = express.Router();
 
 const {secret_key} = require("../env");
 
+
+let checkJWTCredentials = async (email,password)=>{
+
+    let connection = await getConnection();
+
+    try {
+        let [account] = await connection.query("SELECT * FROM account WHERE email=?",[email]);
+        if(account.length===0){
+            throw new Error("No account exist");
+        }
+
+        let e = account[0].email;
+        let p = account[0].password;
+
+        if(e!==email || p!==password){
+            throw new Error("Email and Password not same");
+        }
+        await connection.release();
+        return true;
+    } catch (error) {
+        console.log(error.message);
+        await connection.release();
+        return false;
+    }
+}
+
+
+ExtraControllers.post("/api/updatedetailaccount", async(req,res)=>{
+    try {
+        let {
+            first_name,
+            last_name
+        } = req.body;
+        let token = req.headers.authorization.replace("Bearer ","");
+        let decoded = jwt.decode(token,secret_key);
+        
+        let isValid = await checkJWTCredentials(decoded.email,decoded.password);
+
+        if(isValid){
+            let connection = await getConnection();
+            let query = await connection.query("UPDATE account SET ? WHERE id_account=?",[{
+                first_name:first_name,
+                last_name:last_name
+            },decoded.id_account]);
+
+            res.json({
+                success:true,
+                data:{
+                    ...decoded,
+                    first_name:first_name,
+                    last_name:last_name
+                }
+            })
+        }
+        else{
+            throw new Error("Credentials invalid")
+        }
+
+    } catch (error) {
+        res.json({
+            success:false,
+            msg:error.message
+        })
+    }
+})
+
+
 ExtraControllers.post("/api/loginaccount", async(req,res)=>{
     try {
 
