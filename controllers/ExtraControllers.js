@@ -38,6 +38,79 @@ let checkJWTCredentials = async (email,password)=>{
     }
 }
 
+ExtraControllers.post("/api/updatepasswordaccount", async(req,res)=>{
+    try {  
+        let {
+            password
+        } = req.body;
+        let token = req.headers.authorization.replace("Bearer ","");
+        let decoded = jwt.decode(token,secret_key);
+
+        let isValid = await checkJWTCredentials(decoded.email,decoded.password);
+
+        if(isValid){
+            let connection = await getConnection();
+            let query = await connection.query("UPDATE account SET ? WHERE id_account=?",[{
+               password:password
+            },decoded.id_account]);
+
+            await connection.release();
+            res.json({
+                success:true,
+                data:{
+                    ...decoded,
+                    password:password
+                }
+            })
+        }
+        else{
+            throw new Error("Credentials invalid")
+        }
+
+    } catch (error) {
+        res.json({
+            success:false,
+            msg:error.message
+        })
+    }
+})
+
+ExtraControllers.post("/api/updateemailaccount", async(req,res)=>{
+    try {  
+        let {
+            email
+        } = req.body;
+        let token = req.headers.authorization.replace("Bearer ","");
+        let decoded = jwt.decode(token,secret_key);
+
+        let isValid = await checkJWTCredentials(decoded.email,decoded.password);
+
+        if(isValid){
+            let connection = await getConnection();
+            let query = await connection.query("UPDATE account SET ? WHERE id_account=?",[{
+               email:email
+            },decoded.id_account]);
+
+            await connection.release();
+            res.json({
+                success:true,
+                data:{
+                    ...decoded,
+                    email:email
+                }
+            })
+        }
+        else{
+            throw new Error("Credentials invalid")
+        }
+
+    } catch (error) {
+        res.json({
+            success:false,
+            msg:error.message
+        })
+    }
+})
 
 ExtraControllers.post("/api/updatedetailaccount", async(req,res)=>{
     try {
@@ -57,6 +130,7 @@ ExtraControllers.post("/api/updatedetailaccount", async(req,res)=>{
                 last_name:last_name
             },decoded.id_account]);
 
+            await connection.release();
             res.json({
                 success:true,
                 data:{
