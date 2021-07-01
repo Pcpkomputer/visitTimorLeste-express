@@ -1,3 +1,10 @@
+$('#table').bootstrapTable({
+    height:800,
+    pagination:true,
+    search:true
+});
+
+
 $(document).on("keypress","#addUserModal .inputMiniType",(e)=>{
     if(e.charCode===13){
         e.preventDefault();

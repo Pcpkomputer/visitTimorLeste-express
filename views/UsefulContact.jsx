@@ -2,7 +2,7 @@ var React = require('react');
 var Sidebar = require("./components/Sidebar");
 
 
-function LocalReview(props) {
+function UsefulContact(props) {
   return (
       <html style={{backgroundColor:"#f4f3ef"}}>
       <head>
@@ -15,11 +15,12 @@ function LocalReview(props) {
       <link href="static/assets/demo/demo.css" rel="stylesheet" />
       <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet"/>
       <link href="static/assets/clockpicker/bootstrap-clockpicker.min.css" rel="stylesheet" />
+      <link id="bsdp-css" href="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker3.min.css" rel="stylesheet"/>
       <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css"/>
       </head>
       <body>
         <div className="wrapper ">
-          <Sidebar selected="localreview"/>
+          <Sidebar selected="usefulcontact"/>
           <div className="main-panel" style={{height: '100vh'}}>
             <nav className="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
               <div className="container-fluid">
@@ -31,7 +32,7 @@ function LocalReview(props) {
                       <span className="navbar-toggler-bar bar3" />
                     </button>
                   </div>
-                  <a className="navbar-brand" href="javascript:;">Local Review</a>
+                  <a className="navbar-brand" href="javascript:;">Useful Contact</a>
                 </div>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                   <span className="navbar-toggler-bar navbar-kebab" />
@@ -57,62 +58,34 @@ function LocalReview(props) {
             </nav>
             <div className="content">
               <div className="row" style={{margin:0}}>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addLocalReviewModal">Add Local Review</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addHandyTipsModal">Add Useful Contact</button>
 
 
 
 
-                    <form action="api/localreview/update" method="POST" encType="multipart/form-data" class="modal fade" id="updateLocalReviewModal" tabindex="-1" role="dialog" aria-labelledby="addToursModal" aria-hidden="true">
+                    <form action="api/usefulcontact/update" method="POST" encType="multipart/form-data" class="modal fade" id="updateHandyTipsModal" tabindex="-1" role="dialog" aria-labelledby="addToursModal" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Update Local Review</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Update Useful Contact</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
                       <div class="modal-body">
-                        <div class="form-group">
-                          <label for="exampleFormControlInput1">ID Local Review</label>
-                          <input id="inputAddLocalReview" readOnly required name="id" type="text" class="form-control" placeholder=""/>
-                        </div>
-                        <div class="form-group">
-                                <label for="exampleFormControlSelect1">Related Tours</label>
-                                <select id="inputAddLocalReview" required name="relatedtours" class="form-control relatedtoursinput">
-                                  {
-                                    props.tours.map((item,index)=>{
-                                      return (
-                                        <option value={item.id_tours}>{item.name}</option>
-                                      )
-                                    })
-                                  }
-                                </select>
-                        </div>
-                        <div class="form-group">
-                                <label for="exampleFormControlSelect1">User</label>
-                                <select id="inputAddLocalReview" required name="relateduser" class="form-control relateduserinput">
-                                  {
-                                    props.user.map((item,index)=>{
-                                        return (
-                                          <option value={item.id_user}>{item.name}</option>
-                                        )
-                                    })
-                                  }
-                                </select>
-                        </div>
-                        <div class="form-group">
-                          <label for="exampleFormControlInput1">Quote</label>
-                          <input id="inputAddLocalReview" required name="quote" type="text" class="form-control" placeholder="Quote"/>
-                        </div>
-                        <div class="form-group">
-                          <label for="exampleFormControlInput1">Why Should Visit</label>
-                          <textarea id="inputAddLocalReview" required name="whyshouldvisit" type="text" class="form-control" placeholder="Why Should Visit"/>
-                        </div>
-                        <div class="form-group">
-                          <label for="exampleFormControlInput1">Special Tip</label>
-                          <textarea id="inputAddLocalReview" required name="specialtip" type="text" class="form-control" placeholder="Special Tip"/>
-                        </div>
-                      </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">ID Tips</label>
+                                <input id="inputAddHandyTips" required name="id" type="text" class="form-control" readOnly/>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">Useful Contact Name</label>
+                                <input id="inputAddHandyTips" required name="name" type="text" class="form-control" placeholder="Tips Name"/>
+                            </div>
+                            <div class="form-group" id="containerupdatetipscontent">
+                                <label for="exampleFormControlInput1">Useful Contact Content</label>
+                                <textarea  required id="updatetipscontent" name="content" class="form-control"/>
+                            </div>
+                    </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -126,52 +99,24 @@ function LocalReview(props) {
 
 
 
-                    <form action="api/localreview/create" method="POST" encType="multipart/form-data" class="modal fade" id="addLocalReviewModal" tabindex="-1" role="dialog" aria-labelledby="addToursModal" aria-hidden="true">
+                    <form action="api/usefulcontact/create" method="POST" encType="multipart/form-data" class="modal fade" id="addHandyTipsModal" tabindex="-1" role="dialog" aria-labelledby="addToursModal" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add Local Review</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Add Useful Contact</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
                       <div class="modal-body">
-                        <div class="form-group">
-                                <label for="exampleFormControlSelect1">Related Tours</label>
-                                <select required name="relatedtours" class="form-control" id="exampleFormControlSelect1">
-                                {
-                                    props.tours.map((item,index)=>{
-                                      return (
-                                        <option value={item.id_tours}>{item.name}</option>
-                                      )
-                                    })
-                                  }
-                                </select>
-                        </div>
-                        <div class="form-group">
-                                <label for="exampleFormControlSelect1">User</label>
-                                <select required name="relateduser" class="form-control" id="exampleFormControlSelect1">
-                                {
-                                    props.user.map((item,index)=>{
-                                        return (
-                                          <option value={item.id_user}>{item.name}</option>
-                                        )
-                                    })
-                                  }
-                                </select>
-                        </div>
-                        <div class="form-group">
-                          <label for="exampleFormControlInput1">Quote</label>
-                          <input id="inputAddLocalReview" required name="quote" type="text" class="form-control" placeholder="Quote"/>
-                        </div>
-                        <div class="form-group">
-                          <label for="exampleFormControlInput1">Why Should Visit</label>
-                          <textarea id="inputAddLocalReview" required name="whyshouldvisit" type="text" class="form-control" placeholder="Why Should Visit"/>
-                        </div>
-                        <div class="form-group">
-                          <label for="exampleFormControlInput1">Special Tip</label>
-                          <textarea id="inputAddLocalReview" required name="specialtip" type="text" class="form-control" placeholder="Special Tip"/>
-                        </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">Contact Name</label>
+                                <input id="inputAddHandyTips" required name="name" type="text" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">Contact Content</label>
+                                <textarea id="inputAddHandyTips" required id="contentAddTips" class="form-control" name="content"></textarea>
+                            </div>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -201,31 +146,27 @@ function LocalReview(props) {
                             <thead class=" text-primary"> 
                             <tr>
                                 <th> No</th> 
-                                <th> Related Tours</th> 
-                                <th> User</th> 
-                                <th> Quote</th> 
-                                <th> Why Should Visit</th>
-                                <th> Special Tip </th>
+                                <th> Contact Name</th> 
+                                <th> Content</th> 
                                 <th> Action </th>
                             </tr>
                             </thead> 
                             <tbody> 
+                
                               {
-                                props.localreview.map((item,index)=>{
+                                props.contact.map((element,index)=>{
                                   return (
                                     <tr> 
-                                        <td data-id={item.id_localreview} id="no"> {index+1} </td> 
-                                        <td data-id={item.id_tours} id="tours">{item.toursname}</td> 
-                                        <td data-id={item.id_user} id="user"> {item.username}</td>
-                                        <td id="quote">{item.quote}</td>
-                                        <td id="whyshouldvisit">{item.whyshouldvisit}</td>
-                                        <td id="specialtip">{item.specialtip}</td>
+                                        <td data-id={element.id_usefulcontact} id="no">{index+1}</td> 
+                                        <td id="name">{element.usefulcontact_name}</td> 
+                                        <td id="content">{element.content.slice(0,60)+"..."}</td>
                                         <td>
+                                            <div id="contentUpdateHandyTips" data-content={element.content} style={{display:"none"}}></div>
                                             <div style={{display:"flex",flexDirection:"row",width:"100%",height:"100%"}}>
                                             <form>
-                                                <button id="btnUpdate" type="button" data-toggle="modal" data-target="#updateLocalReviewModal" class="btn btn-warning">UPDATE</button>
+                                                <button id="btnUpdate" type="button" data-toggle="modal" data-target="#updateHandyTipsModal" class="btn btn-warning">UPDATE</button>
                                             </form>
-                                            <form action={`/api/localreview/delete/${item.id_localreview}`} method="POST">
+                                            <form action={`/api/usefulcontact/delete/${element.id_usefulcontact}`} method="POST">
                                                 <button type="submit" class="btn btn-danger">DELETE</button>
                                             </form>
                                             </div>
@@ -254,11 +195,12 @@ function LocalReview(props) {
       <script src="static/assets/clockpicker/bootstrap-clockpicker.min.js" type="text/javascript"></script>
       <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
-      <script src="static/assets/localreview.js" type="text/javascript"></script>
+      <script src="static/assets/usefulcontact.js" type="text/javascript"></script>
+    <script src="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
       </html>
   );
 }
 
-module.exports = LocalReview;
+module.exports = UsefulContact;
 
 

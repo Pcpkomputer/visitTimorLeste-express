@@ -55,6 +55,25 @@ function SideBar(props){
             </a>
           </li>
           <div class="logo"></div>
+          <li className={`${(props.selected==="handytips") ? "active":""}`}>
+            <a href="handytips">
+              <i className="nc-icon nc-single-copy-04" />
+              <p>Handy Tips</p>
+            </a>
+          </li>
+          <li className={`${(props.selected==="usefulcontact") ? "active":""}`}>
+            <a href="usefulcontact">
+              <i className="nc-icon nc-single-copy-04" />
+              <p>Useful Contact</p>
+            </a>
+          </li>
+          <li className={`${(props.selected==="about") ? "active":""}`}>
+            <a href="about">
+              <i className="nc-icon nc-single-copy-04" />
+              <p>About</p>
+            </a>
+          </li>
+          <div class="logo"></div>
           <li className={`${(props.selected==="user") ? "active":""}`}>
             <a href="user">
               <i className="nc-icon nc-single-02" />

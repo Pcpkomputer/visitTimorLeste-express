@@ -1,3 +1,10 @@
+$('#table').bootstrapTable({
+    height:800,
+    pagination:true,
+    search:true
+});
+
+
 $(document).on("click","#btnUpdate",(e)=>{
 
 

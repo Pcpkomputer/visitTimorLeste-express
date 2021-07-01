@@ -12,6 +12,7 @@ function User(props) {
       <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet"/>
       <link href="static/assets/css/bootstrap.min.css" rel="stylesheet" />
       <link href="static/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
+      <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css"/>
       <link href="static/assets/demo/demo.css" rel="stylesheet" />
       </head>
       <body>
@@ -319,6 +320,7 @@ function User(props) {
       <script src="static/assets/js/plugins/chartjs.min.js"></script>
       <script src="static/assets/js/plugins/bootstrap-notify.js"></script>
       <script src="static/assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>
+      <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>
       <script src="static/assets/user.js" type="text/javascript"></script>
       </html>
   );

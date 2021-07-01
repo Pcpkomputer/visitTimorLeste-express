@@ -16,6 +16,9 @@ const LocalReviewControllers = require("./controllers/LocalReviewControllers");
 const PromotionsControllers = require("./controllers/PromotionsControllers");
 const ExtraControllers = require("./controllers/ExtraControllers");
 const AccountControllers = require("./controllers/AccountControllers");
+const HandyTipsControllers = require("./controllers/HandyTipsControllers");
+const UsefulContactControllers = require("./controllers/UsefulContactControllers");
+const AboutControllers = require("./controllers/AboutControllers");
 
 const {getConnection} = require("./connection/db");
 
@@ -61,6 +64,15 @@ app.use(PromotionsControllers);
 ///////////////////////
 ///// ROUTE ACCOUNT //////
 app.use(AccountControllers);
+///////////////////////
+///// ROUTE HANDY TIPS //////
+app.use(HandyTipsControllers);
+///////////////////////
+///// ROUTE USEFUL CONTACT //////
+app.use(UsefulContactControllers);
+///////////////////////
+///// ROUTE ABOUT //////
+app.use(AboutControllers);
 ///////////////////////
 ///// ROUTE EXTRA //////
 app.use(ExtraControllers);
@@ -169,6 +181,40 @@ app.get("/user", async(req,res)=>{
 
     let message = req.flash("message");
     res.render("User", {message:message[0], class:message[1], user:userpreprocessed});
+})
+
+app.get("/handytips", async(req,res)=>{
+
+    let connection = await getConnection()
+
+    let [handytips] = await connection.query("SELECT * FROM handytips");
+
+    await connection.release()
+
+    let message = req.flash("message");
+    res.render("HandyTips", {message:message[0], class:message[1], handytips:handytips})
+})
+
+app.get("/usefulcontact", async(req,res)=>{
+
+    let connection = await getConnection()
+
+    let [contact] = await connection.query("SELECT * FROM usefulcontact");
+
+    await connection.release()
+    let message = req.flash("message");
+    res.render("UsefulContact",{message:message[0], class:message[1], contact:contact})
+})
+
+app.get("/about",async (req,res)=>{
+
+    let connection = await getConnection();
+
+    let [about] = await connection.query("SELECT * FROM about");
+
+    await connection.release();
+    let message = req.flash("message");
+    res.render("About",{message:message[0], class:message[1], about:about})
 })
 
 const server = app.listen(8000,()=>{
