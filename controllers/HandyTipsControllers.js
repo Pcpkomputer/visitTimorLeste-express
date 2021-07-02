@@ -17,7 +17,7 @@ HandyTipsControllers.get("/api/handytips", async(req,res)=>{
 
         await connection.release();
         res.json({
-            succes:true,
+            success:true,
             data:tips
         })
     } catch (error) {
