@@ -261,7 +261,7 @@ function Tours(props) {
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlTextarea1">Description</label>
-                          <textarea id="inputUpdateTours" required name="description" class="form-control" rows="3"></textarea>
+                          <textarea id="inputUpdateTours" required name="description" class="form-control description" rows="3"></textarea>
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlTextarea1">Image</label>
@@ -398,7 +398,7 @@ function Tours(props) {
                                   <td id="address"> {item.address} </td> 
                                   <td id="website"> {item.website} </td> 
                                   <td id="phone"> {item.phone} </td> 
-                                  <td id="description"> {trimText(item.description)}</td> 
+                                  <td id="description" data-value={`${item.description}`}> {trimText(item.description)}</td> 
                                   <td>
                                     <button id="btnEditTimeTours" type="button" class="btn btn-info">EDIT</button>
                                   </td> 

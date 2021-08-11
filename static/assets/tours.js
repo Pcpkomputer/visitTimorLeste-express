@@ -173,6 +173,9 @@ $(document).on("click","#btnUpdate",(e)=>{
 
     let idcategory = row.querySelector("#category").getAttribute("data-id");
 
+    let contentDescription = row.querySelector("#description").getAttribute("data-value");
+
+
 
     let list = row.querySelectorAll("td");
 
@@ -193,12 +196,15 @@ $(document).on("click","#btnUpdate",(e)=>{
     })
 
     document.querySelector("#updateToursModal").action=`api/tours/update/${filteredList[0]}`;
-
+   
     let input = document.querySelectorAll("#inputUpdateTours");
     console.log(input);
     input.forEach((item,i)=>{
         item.value=filteredList[i];
     })
+
+    document.querySelector("#updateToursModal .description").value=contentDescription;
+
 
     document.querySelector("#updateToursModal .categoryvalue").value=parseInt(idcategory);
     document.querySelector("#previewToursImageUpdate").src=filteredList[7];
