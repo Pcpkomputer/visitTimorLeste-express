@@ -5,6 +5,7 @@ const promisify = require("util").promisify
 const fs = require("fs");
 
 const {getConnection} = require("../connection/db");
+const isAuthenticate = require("../utils/isAuthenticate");
 
 const ToursControllers = express.Router();
 
@@ -47,7 +48,7 @@ ToursControllers.get("/api/tours/:id", async (req,res)=>{
     }
 });
 
-ToursControllers.post("/api/tours/:id/schedule/update", async (req,res)=>{
+ToursControllers.post("/api/tours/:id/schedule/update", isAuthenticate, async (req,res)=>{
     let {
         time
     } = req.body;
@@ -67,7 +68,7 @@ ToursControllers.post("/api/tours/:id/schedule/update", async (req,res)=>{
 })
 
 
-ToursControllers.get("/api/tours/:id/schedule", async (req,res)=>{
+ToursControllers.get("/api/tours/:id/schedule", isAuthenticate, async (req,res)=>{
     if(!req.params.id){
         res.status(200).send("Required ID");
     }else{
@@ -90,7 +91,7 @@ ToursControllers.get("/api/tours/:id/schedule", async (req,res)=>{
    
 });
 
-ToursControllers.post("/api/tours/create", async (req,res)=>{
+ToursControllers.post("/api/tours/create", isAuthenticate, async (req,res)=>{
 
     if(req.files.image){    
         let {
@@ -149,7 +150,7 @@ ToursControllers.post("/api/tours/create", async (req,res)=>{
 
 });
 
-ToursControllers.post("/api/tours/delete/:id",async(req,res)=>{
+ToursControllers.post("/api/tours/delete/:id", isAuthenticate,async(req,res)=>{
     try{
         let koneksi = await getConnection();
 
@@ -166,7 +167,7 @@ ToursControllers.post("/api/tours/delete/:id",async(req,res)=>{
       }
 });
 
-ToursControllers.post("/api/tours/update/:id",async(req,res)=>{
+ToursControllers.post("/api/tours/update/:id", isAuthenticate,async(req,res)=>{
     if(req.files){
         let {
             category,

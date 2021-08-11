@@ -5,7 +5,7 @@ const promisify = require("util").promisify
 const fs = require("fs");
 
 const {getConnection} = require("../connection/db");
-
+const isAuthenticate = require("../utils/isAuthenticate");
 
 const SpotlightsControllers = express.Router();
 
@@ -40,7 +40,7 @@ SpotlightsControllers.get("/api/spotlights/:id", async (req,res)=>{
 });
 
 
-SpotlightsControllers.post("/api/spotlights/create", async (req,res)=>{
+SpotlightsControllers.post("/api/spotlights/create",isAuthenticate, async (req,res)=>{
     try {
        let {
            title,
@@ -72,14 +72,14 @@ SpotlightsControllers.post("/api/spotlights/create", async (req,res)=>{
     }
 });
 
-SpotlightsControllers.post("/api/spotlights/delete/:id",async(req,res)=>{
+SpotlightsControllers.post("/api/spotlights/delete/:id", isAuthenticate,async(req,res)=>{
     let connection = await getConnection();
     let result = await connection.query("DELETE FROM spotlights WHERE id_spotlights=?",[req.params.id]);
     req.flash("message", ["Success deleting spotlights...","success"]);
     res.redirect("/spotlights");
 });
 
-SpotlightsControllers.post("/api/spotlights/update/:id",async(req,res)=>{
+SpotlightsControllers.post("/api/spotlights/update/:id", isAuthenticate,async(req,res)=>{
     if(req.files){
         
         let conn = await getConnection();

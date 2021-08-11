@@ -5,6 +5,7 @@ const promisify = require("util").promisify
 const fs = require("fs");
 
 const {getConnection} = require("../connection/db");
+const isAuthenticate = require("../utils/isAuthenticate");
 
 const CategoryControllers = express.Router();
 
@@ -47,7 +48,7 @@ CategoryControllers.get("/api/category/:id", async (req,res)=>{
 
 
 
-CategoryControllers.post("/api/category/create", async (req,res)=>{
+CategoryControllers.post("/api/category/create", isAuthenticate, async (req,res)=>{
     try{
 
         let {
@@ -74,7 +75,7 @@ CategoryControllers.post("/api/category/create", async (req,res)=>{
     
 });
 
-CategoryControllers.post("/api/category/delete/:id",async(req,res)=>{
+CategoryControllers.post("/api/category/delete/:id", isAuthenticate,async(req,res)=>{
     try{
 
         let connection = await getConnection();
@@ -92,7 +93,7 @@ CategoryControllers.post("/api/category/delete/:id",async(req,res)=>{
     }
 });
 
-CategoryControllers.post("/api/category/update/:id",async(req,res)=>{
+CategoryControllers.post("/api/category/update/:id", isAuthenticate,async(req,res)=>{
     try{
         if(req.files){
             let conn = await getConnection();

@@ -7,6 +7,7 @@ const fs = require("fs");
 var jwt = require('jwt-simple');
 
 const {getConnection} = require("../connection/db");
+const isAuthenticate = require("../utils/isAuthenticate");
 
 const ExtraControllers = express.Router();
 

@@ -5,6 +5,7 @@ const promisify = require("util").promisify
 const fs = require("fs");
 
 const {getConnection} = require("../connection/db");
+const isAuthenticate = require("../utils/isAuthenticate");
 
 
 const AccountControllers = express.Router();
@@ -46,7 +47,7 @@ AccountControllers.get("/api/account/:id", async (req,res)=>{
 });
 
 
-AccountControllers.post("/api/account/create", async (req,res)=>{
+AccountControllers.post("/api/account/create", isAuthenticate, async (req,res)=>{
    try {
         let {
             firstname,
@@ -85,7 +86,7 @@ AccountControllers.post("/api/account/create", async (req,res)=>{
    }
 });
 
-AccountControllers.post("/api/account/delete/:id",async(req,res)=>{
+AccountControllers.post("/api/account/delete/:id", isAuthenticate,async(req,res)=>{
     try {
         let connection = await getConnection();
         let result = connection.query("DELETE FROM account WHERE id_account=?",[req.params.id]);
@@ -103,7 +104,7 @@ AccountControllers.post("/api/account/delete/:id",async(req,res)=>{
     }
 });
 
-AccountControllers.post("/api/account/update/:id",async(req,res)=>{
+AccountControllers.post("/api/account/update/:id", isAuthenticate,async(req,res)=>{
     try {
     
         let {

@@ -5,7 +5,7 @@ const promisify = require("util").promisify
 const fs = require("fs");
 
 const {getConnection} = require("../connection/db");
-
+const isAuthenticate = require("../utils/isAuthenticate");
 
 const PromotionsControllers = express.Router();
 
@@ -47,7 +47,7 @@ PromotionsControllers.get("/api/promotions/:id", async (req,res)=>{
 });
 
 
-PromotionsControllers.post("/api/promotions/create", async (req,res)=>{
+PromotionsControllers.post("/api/promotions/create",isAuthenticate, async (req,res)=>{
    try {
 
         let {
@@ -86,7 +86,7 @@ PromotionsControllers.post("/api/promotions/create", async (req,res)=>{
    }
 });
 
-PromotionsControllers.post("/api/promotions/delete/:id",async(req,res)=>{
+PromotionsControllers.post("/api/promotions/delete/:id", isAuthenticate,async(req,res)=>{
     try {
        
 
@@ -107,7 +107,7 @@ PromotionsControllers.post("/api/promotions/delete/:id",async(req,res)=>{
     }
 });
 
-PromotionsControllers.post("/api/promotions/update/:id",async(req,res)=>{
+PromotionsControllers.post("/api/promotions/update/:id", isAuthenticate,async(req,res)=>{
     try {
     
         let {

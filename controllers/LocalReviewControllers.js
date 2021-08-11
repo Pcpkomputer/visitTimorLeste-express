@@ -5,6 +5,7 @@ const promisify = require("util").promisify
 const fs = require("fs");
 
 const {getConnection} = require("../connection/db");
+const isAuthenticate = require("../utils/isAuthenticate");
 
 const LocalReviewControllers = express.Router();
 
@@ -54,7 +55,7 @@ LocalReviewControllers.get("/api/localreview/:id", async (req,res)=>{
 });
 
 
-LocalReviewControllers.post("/api/localreview/create", async (req,res)=>{
+LocalReviewControllers.post("/api/localreview/create", isAuthenticate, async (req,res)=>{
 
     // {
     //     relatedtours: '1',
@@ -96,7 +97,7 @@ LocalReviewControllers.post("/api/localreview/create", async (req,res)=>{
     }
 });
 
-LocalReviewControllers.post("/api/localreview/delete/:id",async(req,res)=>{
+LocalReviewControllers.post("/api/localreview/delete/:id", isAuthenticate,async(req,res)=>{
     try {
         let connection = await getConnection();
         let result = await connection.query("DELETE FROM localreview WHERE id_localreview=?",[req.params.id]);
@@ -114,7 +115,7 @@ LocalReviewControllers.post("/api/localreview/delete/:id",async(req,res)=>{
     }
 });
 
-LocalReviewControllers.post("/api/localreview/update/:id",async(req,res)=>{
+LocalReviewControllers.post("/api/localreview/update/:id", isAuthenticate,async(req,res)=>{
     try {
         let {
             relatedtours,

@@ -5,6 +5,7 @@ const promisify = require("util").promisify
 const fs = require("fs");
 
 const {getConnection} = require("../connection/db");
+const isAuthenticate = require("../utils/isAuthenticate");
 
 const AboutControllers = express.Router();
 
@@ -48,7 +49,7 @@ AboutControllers.get("/api/about/:id", async (req,res)=>{
 });
 
 
-AboutControllers.post("/api/about/create", async (req,res)=>{
+AboutControllers.post("/api/about/create", isAuthenticate, async (req,res)=>{
     try {
 
         let {
@@ -75,7 +76,7 @@ AboutControllers.post("/api/about/create", async (req,res)=>{
 
 });
 
-AboutControllers.post("/api/about/delete/:id",async(req,res)=>{
+AboutControllers.post("/api/about/delete/:id", isAuthenticate,async(req,res)=>{
     try {
 
         let connection = await getConnection();
@@ -93,7 +94,7 @@ AboutControllers.post("/api/about/delete/:id",async(req,res)=>{
     }
 });
 
-AboutControllers.post("/api/about/update/:id",async(req,res)=>{
+AboutControllers.post("/api/about/update/:id", isAuthenticate,async(req,res)=>{
     try {
 
         let {

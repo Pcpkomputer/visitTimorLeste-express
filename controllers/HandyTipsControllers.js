@@ -5,6 +5,7 @@ const promisify = require("util").promisify
 const fs = require("fs");
 
 const {getConnection} = require("../connection/db");
+const isAuthenticate = require("../utils/isAuthenticate");
 
 const HandyTipsControllers = express.Router();
 
@@ -48,7 +49,7 @@ HandyTipsControllers.get("/api/handytips/:id", async (req,res)=>{
 });
 
 
-HandyTipsControllers.post("/api/handytips/create", async (req,res)=>{
+HandyTipsControllers.post("/api/handytips/create", isAuthenticate, async (req,res)=>{
     try {
 
         let {
@@ -75,7 +76,7 @@ HandyTipsControllers.post("/api/handytips/create", async (req,res)=>{
 
 });
 
-HandyTipsControllers.post("/api/handytips/delete/:id",async(req,res)=>{
+HandyTipsControllers.post("/api/handytips/delete/:id", isAuthenticate,async(req,res)=>{
     try {
 
         let connection = await getConnection();
@@ -93,7 +94,7 @@ HandyTipsControllers.post("/api/handytips/delete/:id",async(req,res)=>{
     }
 });
 
-HandyTipsControllers.post("/api/handytips/update/:id",async(req,res)=>{
+HandyTipsControllers.post("/api/handytips/update/:id", isAuthenticate,async(req,res)=>{
     try {
 
         let {

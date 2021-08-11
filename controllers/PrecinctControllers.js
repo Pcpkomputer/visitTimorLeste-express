@@ -3,7 +3,8 @@ const multer = require('multer');
 const path = require("path");
 const { getConnection } = require("../connection/db");
 const fs = require("fs");
-const promisify = require("util").promisify
+const promisify = require("util").promisify;
+const isAuthenticate = require("../utils/isAuthenticate");
 
 const PrecinctControllers = express.Router();
 
@@ -44,7 +45,7 @@ PrecinctControllers.get("/api/precinct/:id", async (req,res)=>{
     }
 });
 
-PrecinctControllers.post("/api/precinct/:id/tours/update", async (req,res)=>{
+PrecinctControllers.post("/api/precinct/:id/tours/update", isAuthenticate, async (req,res)=>{
     let {
         json
     } = req.body;
@@ -81,7 +82,7 @@ PrecinctControllers.get("/api/precinct/:id/tours", async (req,res)=>{
    
 });
 
-PrecinctControllers.post("/api/precinct/create", async (req,res)=>{
+PrecinctControllers.post("/api/precinct/create", isAuthenticate, async (req,res)=>{
     let {   
         name,
         minidescription,
@@ -118,7 +119,7 @@ PrecinctControllers.post("/api/precinct/create", async (req,res)=>{
 
 });
 
-PrecinctControllers.post("/api/precinct/delete/:id",async(req,res)=>{
+PrecinctControllers.post("/api/precinct/delete/:id", isAuthenticate,async(req,res)=>{
     let connection = await getConnection();
 
     let query = connection.query("DELETE FROM precinct WHERE id_precinct=?",[req.params.id]);
@@ -129,7 +130,7 @@ PrecinctControllers.post("/api/precinct/delete/:id",async(req,res)=>{
     res.redirect("/precinct");
 });
 
-PrecinctControllers.post("/api/precinct/update/:id",async(req,res)=>{
+PrecinctControllers.post("/api/precinct/update/:id", isAuthenticate,async(req,res)=>{
     if(req.files){
         let {   
             id,

@@ -5,6 +5,7 @@ const promisify = require("util").promisify
 const fs = require("fs");
 
 const {getConnection} = require("../connection/db");
+const isAuthenticate = require("../utils/isAuthenticate");
 
 const UsefulContactControllers = express.Router();
 
@@ -48,7 +49,7 @@ UsefulContactControllers.get("/api/usefulcontact/:id", async (req,res)=>{
 });
 
 
-UsefulContactControllers.post("/api/usefulcontact/create", async (req,res)=>{
+UsefulContactControllers.post("/api/usefulcontact/create", isAuthenticate, async (req,res)=>{
     try {
 
         let {
@@ -75,7 +76,7 @@ UsefulContactControllers.post("/api/usefulcontact/create", async (req,res)=>{
 
 });
 
-UsefulContactControllers.post("/api/usefulcontact/delete/:id",async(req,res)=>{
+UsefulContactControllers.post("/api/usefulcontact/delete/:id", isAuthenticate,async(req,res)=>{
     try {
 
         let connection = await getConnection();
@@ -93,7 +94,7 @@ UsefulContactControllers.post("/api/usefulcontact/delete/:id",async(req,res)=>{
     }
 });
 
-UsefulContactControllers.post("/api/usefulcontact/update/:id",async(req,res)=>{
+UsefulContactControllers.post("/api/usefulcontact/update/:id", isAuthenticate,async(req,res)=>{
     try {
 
         let {

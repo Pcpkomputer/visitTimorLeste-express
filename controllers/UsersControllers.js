@@ -5,7 +5,7 @@ const promisify = require("util").promisify
 const fs = require("fs");
 
 const {getConnection} = require("../connection/db");
-
+const isAuthenticate = require("../utils/isAuthenticate");
 
 const UserControllers = express.Router();
 
@@ -47,7 +47,7 @@ UserControllers.get("/api/user/:id", async (req,res)=>{
 });
 
 
-UserControllers.post("/api/user/create", async (req,res)=>{
+UserControllers.post("/api/user/create", isAuthenticate, async (req,res)=>{
    try {
         let {
             name,
@@ -83,7 +83,7 @@ UserControllers.post("/api/user/create", async (req,res)=>{
    }
 });
 
-UserControllers.post("/api/user/delete/:id",async(req,res)=>{
+UserControllers.post("/api/user/delete/:id", isAuthenticate,async(req,res)=>{
     try {
         let connection = await getConnection();
         let result = connection.query("DELETE FROM user WHERE id_user=?",[req.params.id]);
@@ -101,7 +101,7 @@ UserControllers.post("/api/user/delete/:id",async(req,res)=>{
     }
 });
 
-UserControllers.post("/api/user/update/:id",async(req,res)=>{
+UserControllers.post("/api/user/update/:id", isAuthenticate,async(req,res)=>{
     try {
         if(req.files){
         
