@@ -76,9 +76,8 @@ PromotionsControllers.post("/api/promotions/create", async (req,res)=>{
         }])
 
         await connection.release();
-        res.send({
-            success:true
-        });
+        req.flash("message", ["Success creating promotions...","success"]);
+        res.redirect("/promotions");
    } catch (err) {
         res.status(400).json({
             success:false,
@@ -94,10 +93,11 @@ PromotionsControllers.post("/api/promotions/delete/:id",async(req,res)=>{
         let connection = await getConnection();
 
 
+        let query = await connection.query("DELETE FROM promotions WHERE id_promotions=?",[req.params.id])
+
         await connection.release();
-        res.json({
-            success:true
-        })
+        req.flash("message", ["Success deleting promotions...","success"]);
+        res.redirect("/promotions");
 
     } catch (err) {
         res.status(400).json({
@@ -134,9 +134,8 @@ PromotionsControllers.post("/api/promotions/update/:id",async(req,res)=>{
             disclaimer:disclaimer
         },req.params.id])
 
-        res.send({
-            success:true
-        });
+        req.flash("message", ["Success update promotions...","success"]);
+        res.redirect("/promotions");
         
     } catch (err) {
         res.status(400).json({

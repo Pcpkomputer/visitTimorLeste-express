@@ -85,9 +85,9 @@ LocalReviewControllers.post("/api/localreview/create", async (req,res)=>{
 
         await connection.release();
 
-        res.json({
-            success:true
-        })
+        req.flash("message", ["Success creating local review...","success"]);
+        res.redirect("/localreview");
+
     } catch (err) {
         res.status(400).json({
             success:false,
@@ -103,9 +103,8 @@ LocalReviewControllers.post("/api/localreview/delete/:id",async(req,res)=>{
 
         await connection.release();
         
-        res.json({
-            success:true
-        })
+        req.flash("message", ["Success delete local review...","success"]);
+        res.redirect("/localreview");
 
     } catch (err) {
         res.status(400).json({
@@ -138,9 +137,8 @@ LocalReviewControllers.post("/api/localreview/update/:id",async(req,res)=>{
 
         await connection.release();
 
-        res.json({
-            success:true
-        })
+        req.flash("message", ["Success update local review...","success"]);
+        res.redirect("/localreview");
 
     } catch (err) {
         res.status(400).json({

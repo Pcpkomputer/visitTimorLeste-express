@@ -73,9 +73,8 @@ UserControllers.post("/api/user/create", async (req,res)=>{
         }])
 
         await connection.release();
-        res.send({
-            success:true
-        });
+        req.flash("message", ["Success creating user...","success"]);
+        res.redirect("/user");
    } catch (err) {
         res.status(400).json({
             success:false,
@@ -91,9 +90,8 @@ UserControllers.post("/api/user/delete/:id",async(req,res)=>{
 
         await connection.release();
 
-        res.json({
-            success:true
-        })
+        req.flash("message", ["Success deleting user...","success"]);
+        res.redirect("/user");
 
     } catch (err) {
         res.status(400).json({
@@ -137,9 +135,8 @@ UserControllers.post("/api/user/update/:id",async(req,res)=>{
             },req.params.id]);
             
             await conn.release();
-            res.send({
-                success:true
-            });
+            req.flash("message", ["Success updating user...","success"]);
+            res.redirect("/user");
         }
         else{
     
@@ -164,9 +161,8 @@ UserControllers.post("/api/user/update/:id",async(req,res)=>{
             },req.params.id]);
     
             await conn.release();
-            res.send({
-                success:true
-            });
+            req.flash("message", ["Success updating...","success"]);
+            res.redirect("/user");
         }
     } catch (err) {
         res.status(400).json({

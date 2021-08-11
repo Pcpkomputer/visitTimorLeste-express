@@ -155,9 +155,8 @@ ToursControllers.post("/api/tours/delete/:id",async(req,res)=>{
 
         let result = await koneksi.query("DELETE FROM tours WHERE id_tours=?",[req.params.id]);
   
-        res.json({
-            success:true
-        })
+        req.flash("message", ["Success delete tours...","success"]);
+        res.redirect("/tours");
       }
       catch(err){
         res.status(400).json({
@@ -201,9 +200,9 @@ ToursControllers.post("/api/tours/update/:id",async(req,res)=>{
             image:filename
         },req.params.id]);
         await conn.release();
-        res.send({
-            success:true
-        });
+
+        req.flash("message", ["Success updating tours...","success"]);
+        res.redirect("/tours");
         
     }
     else{
@@ -226,9 +225,9 @@ ToursControllers.post("/api/tours/update/:id",async(req,res)=>{
             description:description,
         },req.params.id]);
         await conn.release();
-        res.send({
-            success:true
-        });
+        
+        req.flash("message", ["Success updating tours...","success"]);
+        res.redirect("/tours");
     }
 })
 

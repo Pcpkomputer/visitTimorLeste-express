@@ -64,9 +64,8 @@ AboutControllers.post("/api/about/create", async (req,res)=>{
         }])
         
         await connection.release()
-        res.json({
-            success:true
-        })
+        req.flash("message", ["Success creating about...","success"]);
+        res.redirect("/about");
     } catch (error) {
         res.json({
             success:false,
@@ -84,9 +83,8 @@ AboutControllers.post("/api/about/delete/:id",async(req,res)=>{
         await connection.query("DELETE FROM about WHERE id_about=?",[req.params.id]);
         
         await connection.release();
-        res.json({
-            success:true
-        });
+        req.flash("message", ["Success deleting about...","success"]);
+        res.redirect("/about");
     } catch (error) {
         res.json({
             success:false,
@@ -112,9 +110,8 @@ AboutControllers.post("/api/about/update/:id",async(req,res)=>{
         },req.params.id])
         
         await connection.release()
-        res.json({
-            success:true
-        })
+        req.flash("message", ["Success updating about...","success"]);
+        res.redirect("/about");
     } catch (error) {
         res.json({
             success:false,

@@ -61,10 +61,9 @@ CategoryControllers.post("/api/category/create", async (req,res)=>{
         let connection = await getConnection();
         let result = await connection.execute("INSERT INTO category VALUES (NULL,?,?)",[name,filename]);
         await connection.release();
-        res.json({
-            success:true,
-            data:result
-        });
+        
+        req.flash("message", ["Success creating category...","success"]);
+        res.redirect("/category");
     }
     catch(err){
         res.status(400).json({
@@ -81,10 +80,9 @@ CategoryControllers.post("/api/category/delete/:id",async(req,res)=>{
         let connection = await getConnection();
         let result = await connection.execute("DELETE FROM category WHERE id_category=?",[req.params.id]);
         await connection.release();
-        res.json({
-            success:true,
-            data:result
-        });
+        
+        req.flash("message", ["Success deleting category...","success"]);
+        res.redirect("/category");
     }
     catch(err){
         res.status(400).json({
@@ -113,9 +111,9 @@ CategoryControllers.post("/api/category/update/:id",async(req,res)=>{
 
             let result = await conn.query("UPDATE category SET ? WHERE id_category=?",[{category_name:name,image:filename},req.params.id]);
             await conn.release();
-            res.send({
-                success:true
-            });
+            
+            req.flash("message", ["Success updating category...","success"]);
+            res.redirect("/category");
         }
         else{
             let conn = await getConnection();
@@ -127,9 +125,9 @@ CategoryControllers.post("/api/category/update/:id",async(req,res)=>{
             let result = await conn.query("UPDATE category SET ? WHERE id_category=?",[{category_name:name},req.params.id]);
 
             await conn.release();
-            res.send({
-                sucess:true
-            });
+            
+            req.flash("message", ["Success updating category...","success"]);
+            res.redirect("/category");
         }
     }
     catch(err){

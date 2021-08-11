@@ -74,9 +74,8 @@ AccountControllers.post("/api/account/create", async (req,res)=>{
             }]);
     
             await connection.release();
-            res.send({
-                success:true
-            });
+            req.flash("message", ["Success creating account...","success"]);
+            res.redirect("/account");
         }
    } catch (err) {
         res.status(400).json({
@@ -93,9 +92,8 @@ AccountControllers.post("/api/account/delete/:id",async(req,res)=>{
 
         await connection.release();
 
-        res.json({
-            success:true
-        })
+        req.flash("message", ["Success delete account...","success"]);
+        res.redirect("/account");
 
     } catch (err) {
         res.status(400).json({
@@ -125,9 +123,8 @@ AccountControllers.post("/api/account/update/:id",async(req,res)=>{
         },req.params.id])
         
         await connection.release();
-        res.send({
-            success:true
-        })
+        req.flash("message", ["Success updating account...","success"]);
+        res.redirect("/account");
 
     } catch (err) {
         res.status(400).json({

@@ -64,9 +64,8 @@ HandyTipsControllers.post("/api/handytips/create", async (req,res)=>{
         }])
         
         await connection.release()
-        res.json({
-            success:true
-        })
+        req.flash("message", ["Success creating handy tips...","success"]);
+        res.redirect("/handytips");
     } catch (error) {
         res.json({
             success:false,
@@ -84,9 +83,8 @@ HandyTipsControllers.post("/api/handytips/delete/:id",async(req,res)=>{
         await connection.query("DELETE FROM handytips WHERE id_handytips=?",[req.params.id]);
         
         await connection.release();
-        res.json({
-            success:true
-        });
+        req.flash("message", ["Success delete handy tips...","success"]);
+        res.redirect("/handytips");
     } catch (error) {
         res.json({
             success:false,
@@ -112,9 +110,8 @@ HandyTipsControllers.post("/api/handytips/update/:id",async(req,res)=>{
         },req.params.id])
         
         await connection.release()
-        res.json({
-            success:true
-        })
+        req.flash("message", ["Success update...","success"]);
+        res.redirect("/handytips");
     } catch (error) {
         res.json({
             success:false,

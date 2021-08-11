@@ -64,9 +64,8 @@ UsefulContactControllers.post("/api/usefulcontact/create", async (req,res)=>{
         }])
         
         await connection.release()
-        res.json({
-            success:true
-        })
+        req.flash("message", ["Success creating useful contact...","success"]);
+        res.redirect("/usefulcontact");
     } catch (error) {
         res.json({
             success:false,
@@ -84,9 +83,8 @@ UsefulContactControllers.post("/api/usefulcontact/delete/:id",async(req,res)=>{
         await connection.query("DELETE FROM usefulcontact WHERE id_usefulcontact=?",[req.params.id]);
         
         await connection.release();
-        res.json({
-            success:true
-        });
+        req.flash("message", ["Success deleting useful contact...","success"]);
+        res.redirect("/usefulcontact");
     } catch (error) {
         res.json({
             success:false,
@@ -112,9 +110,8 @@ UsefulContactControllers.post("/api/usefulcontact/update/:id",async(req,res)=>{
         },req.params.id])
         
         await connection.release()
-        res.json({
-            success:true
-        })
+        req.flash("message", ["Success updating useful contact...","success"]);
+        res.redirect("/usefulcontact");
     } catch (error) {
         res.json({
             success:false,

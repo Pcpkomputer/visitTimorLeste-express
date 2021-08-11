@@ -62,9 +62,9 @@ PrecinctControllers.post("/api/precinct/:id/tours/update", async (req,res)=>{
     let query2 = await connection.query("INSERT INTO precinct_tours VALUES ?",[parsed]);
 
     await connection.release();
-    res.json({
-        success:true
-    })
+    
+    req.flash("message", ["Success updating tours...","success"]);
+    res.redirect("/precinct");
 })
 
 
@@ -112,9 +112,9 @@ PrecinctControllers.post("/api/precinct/create", async (req,res)=>{
     let insertlisttours = await connection.query("INSERT INTO precinct_tours VALUES ?",[preprocessedlisttours]);
 
     await connection.release();
-    res.json({
-        success:true
-    })
+    
+    req.flash("message", ["Success creating precinct...","success"]);
+    res.redirect("/precinct");
 
 });
 
@@ -124,9 +124,9 @@ PrecinctControllers.post("/api/precinct/delete/:id",async(req,res)=>{
     let query = connection.query("DELETE FROM precinct WHERE id_precinct=?",[req.params.id]);
 
     await connection.release();
-    res.send({
-        success:true
-    });
+    
+    req.flash("message", ["Success delete precinct...","success"]);
+    res.redirect("/precinct");
 });
 
 PrecinctControllers.post("/api/precinct/update/:id",async(req,res)=>{
@@ -158,9 +158,8 @@ PrecinctControllers.post("/api/precinct/update/:id",async(req,res)=>{
         },req.params.id]);
 
         await connection.release();
-        res.json({
-            success:true
-        })
+        req.flash("message", ["Success update precinct...","success"]);
+        res.redirect("/precinct");
     }
     else{
         let {   
@@ -179,9 +178,8 @@ PrecinctControllers.post("/api/precinct/update/:id",async(req,res)=>{
         },req.params.id]);
 
         await connection.release();
-        res.json({
-            success:true
-        })
+        req.flash("message", ["Success update precinct...","success"]);
+        res.redirect("/precinct");
     }
 })
 

@@ -78,8 +78,51 @@ app.use(AboutControllers);
 app.use(ExtraControllers);
 ///////////////////////
 
+const isAuthenticate = require("./utils/isAuthenticate");
 
-app.get("/",async (req,res)=>{
+app.post("/login", async(req,res)=>{
+
+    let {
+        email,
+        password
+    } = req.body;
+
+    let connection = await getConnection();
+
+    let [user] = await connection.query("SELECT * FROM admin WHERE email=?",[email]);
+
+    await connection.release();
+
+    if(user.length===0){
+        res.render("Login",{msg:"Account not found"});
+    }
+    else{
+        let credentials = user[0];
+        if(credentials.email===email && credentials.password===password){
+            req.session.credentials=user[0];
+            res.redirect("/");
+        }
+        else{
+            res.render("Login",{msg:"Login failed"})
+        }
+    }
+})
+
+app.get("/logout", async(req,res)=>{
+    delete req.session.credentials;
+    res.redirect("/login");
+})
+
+app.get("/login", async(req,res)=>{
+    if(req.session.credentials){
+        res.redirect("/");
+    }else{
+        res.render("Login");
+    }
+   
+})
+
+app.get("/",isAuthenticate,async (req,res)=>{
     res.render("Dashboard");
 })
 
