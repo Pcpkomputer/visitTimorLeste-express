@@ -25,7 +25,7 @@ const {getConnection} = require("./connection/db");
 const app = express();
 
 app.use(cookieParser('keyboard cat'));
-app.use(session({ cookie: { maxAge: 60000 }}));
+app.use(session());
 app.use(flash());
 
 app.use(fileUpload());
@@ -127,7 +127,7 @@ app.get("/",isAuthenticate,async (req,res)=>{
 })
 
 
-app.get("/tours", async(req,res)=>{
+app.get("/tours", isAuthenticate, async(req,res)=>{
 
     let connection = await getConnection();
     let [category] = await connection.execute("SELECT * FROM category");
@@ -138,7 +138,7 @@ app.get("/tours", async(req,res)=>{
     res.render("Tours", {message:message[0], class:message[1],category:category,tours:tours});
 })
 
-app.get("/category", async(req,res)=>{
+app.get("/category", isAuthenticate, async(req,res)=>{
 
     let connection = await getConnection();
     let [category] = await connection.execute("SELECT * FROM category");
@@ -148,7 +148,7 @@ app.get("/category", async(req,res)=>{
     res.render("Category", {message:message[0], class:message[1],category:category});
 })
 
-app.get("/spotlights", async(req,res)=>{
+app.get("/spotlights", isAuthenticate, async(req,res)=>{
 
     let connection = await getConnection();
     let [spotlights] = await connection.execute("SELECT spotlights.*,tours.name AS toursname,tours.id_tours AS id_tours FROM spotlights INNER JOIN tours ON spotlights.id_tours=tours.id_tours");
@@ -159,7 +159,7 @@ app.get("/spotlights", async(req,res)=>{
     res.render("Spotlights", {message:message[0], class:message[1],tours:tours,spotlights:spotlights});
 })
 
-app.get("/localreview", async(req,res)=>{
+app.get("/localreview", isAuthenticate, async(req,res)=>{
 
     let connection = await getConnection();
     let [tours] = await connection.execute("SELECT tours.id_tours,tours.name FROM tours");
@@ -172,7 +172,7 @@ app.get("/localreview", async(req,res)=>{
     res.render("LocalReview", {message:message[0], class:message[1],tours:tours,user:user,localreview:localreview});
 })
 
-app.get("/precinct", async(req,res)=>{
+app.get("/precinct", isAuthenticate, async(req,res)=>{
 
     let connection = await getConnection();
     let [precinct] = await connection.query("SELECT * FROM precinct");
@@ -184,7 +184,7 @@ app.get("/precinct", async(req,res)=>{
     res.render("Precinct", {message:message[0], class:message[1], tours:tours, precinct:precinct});
 })
 
-app.get("/promotions", async(req,res)=>{
+app.get("/promotions", isAuthenticate, async(req,res)=>{
 
     let connection = await getConnection();
 
@@ -196,7 +196,7 @@ app.get("/promotions", async(req,res)=>{
     res.render("Promotions", {message:message[0], class:message[1],tours:tours, promotions:promotions});
 })
 
-app.get("/account",async (req,res)=>{
+app.get("/account", isAuthenticate,async (req,res)=>{
     let connection = await getConnection();
 
     let [account] = await connection.query("SELECT * FROM account;");
@@ -205,7 +205,7 @@ app.get("/account",async (req,res)=>{
     res.render("Account",{account:account});
 })
 
-app.get("/user", async(req,res)=>{
+app.get("/user", isAuthenticate, async(req,res)=>{
 
     let connection = await getConnection();
     await connection.release();
@@ -226,7 +226,7 @@ app.get("/user", async(req,res)=>{
     res.render("User", {message:message[0], class:message[1], user:userpreprocessed});
 })
 
-app.get("/handytips", async(req,res)=>{
+app.get("/handytips",isAuthenticate, async(req,res)=>{
 
     let connection = await getConnection()
 
@@ -238,7 +238,7 @@ app.get("/handytips", async(req,res)=>{
     res.render("HandyTips", {message:message[0], class:message[1], handytips:handytips})
 })
 
-app.get("/usefulcontact", async(req,res)=>{
+app.get("/usefulcontact",isAuthenticate, async(req,res)=>{
 
     let connection = await getConnection()
 
@@ -249,7 +249,7 @@ app.get("/usefulcontact", async(req,res)=>{
     res.render("UsefulContact",{message:message[0], class:message[1], contact:contact})
 })
 
-app.get("/about",async (req,res)=>{
+app.get("/about",isAuthenticate,async (req,res)=>{
 
     let connection = await getConnection();
 
