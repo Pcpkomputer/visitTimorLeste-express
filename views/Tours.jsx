@@ -261,7 +261,7 @@ function Tours(props) {
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlTextarea1">Description</label>
-                          <textarea id="inputUpdateTours" required name="description" class="form-control description" rows="3"></textarea>
+                          <textarea id="inputUpdateTours" required name="description" class="form-control description" style={{color:"black"}} rows="3"></textarea>
                         </div>
                         <div class="form-group">
                           <label for="exampleFormControlTextarea1">Image</label>
