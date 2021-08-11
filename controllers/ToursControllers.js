@@ -53,18 +53,25 @@ ToursControllers.post("/api/tours/:id/schedule/update", isAuthenticate, async (r
         time
     } = req.body;
 
-    let connection = await getConnection();
-    let q1 = await connection.execute("DELETE FROM schedule WHERE id_tours=?",[req.params.id]);
+    if(JSON.parse(time).length===0){
+        res.redirect("/tours");
+    }
+    else{
+        let connection = await getConnection();
+        let q1 = await connection.execute("DELETE FROM schedule WHERE id_tours=?",[req.params.id]);
+        
+        let payload = JSON.parse(time).map((item,index)=>{
+            return [item.days,item.from_time,item.to_time,req.params.id];
+        })
     
-    let payload = JSON.parse(time).map((item,index)=>{
-        return [item.days,item.from_time,item.to_time,req.params.id];
-    })
+        let q2 = await connection.query("INSERT INTO schedule VALUES ?",[payload]);
+        await connection.release();
+    
+        req.flash("message", ["Success updating schedule...","success"]);
+        res.redirect("/tours");
+    }
 
-    let q2 = await connection.query("INSERT INTO schedule VALUES ?",[payload]);
-    await connection.release();
-
-    req.flash("message", ["Success updating schedule...","success"]);
-    res.redirect("/tours");
+   
 })
 
 
