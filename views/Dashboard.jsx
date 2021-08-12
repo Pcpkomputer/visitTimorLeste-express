@@ -45,7 +45,7 @@ function Dashboard(props) {
                         </p>
                       </a>
                       <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                        <a className="dropdown-item" href="#">Logout</a>
+                        <a className="dropdown-item" href="/logout">Logout</a>
                       </div>
                     </li>
                   </ul>
@@ -59,7 +59,7 @@ function Dashboard(props) {
                     <div className="card-body">
                       <h4 className="card-title" style={{marginTop: '10px'}}>Tours</h4>
                       <h6 className="card-subtitle mb-2 text-muted">Total Tours</h6>
-                      <h3 style={{marginBottom: '10px'}}>5</h3>
+                      <h3 style={{marginBottom: '10px'}}>{props.totaltours}</h3>
                     </div>
                   </div>
                 </div>
@@ -68,7 +68,7 @@ function Dashboard(props) {
                     <div className="card-body">
                       <h4 className="card-title" style={{marginTop: '10px'}}>Category</h4>
                       <h6 className="card-subtitle mb-2 text-muted">Total Category</h6>
-                      <h3 style={{marginBottom: '10px'}}>10</h3>
+                      <h3 style={{marginBottom: '10px'}}>{props.totalcategory}</h3>
                     </div>
                   </div>
                 </div>
@@ -77,7 +77,7 @@ function Dashboard(props) {
                     <div className="card-body">
                       <h4 className="card-title" style={{marginTop: '10px'}}>Spotlights</h4>
                       <h6 className="card-subtitle mb-2 text-muted">Total Spotlights</h6>
-                      <h3 style={{marginBottom: '10px'}}>4</h3>
+                      <h3 style={{marginBottom: '10px'}}>{props.totalspotlights}</h3>
                     </div>
                   </div>
                 </div>
@@ -86,7 +86,7 @@ function Dashboard(props) {
                     <div className="card-body">
                       <h4 className="card-title" style={{marginTop: '10px'}}>Promotions</h4>
                       <h6 className="card-subtitle mb-2 text-muted">Total Promotions</h6>
-                      <h3 style={{marginBottom: '10px'}}>8</h3>
+                      <h3 style={{marginBottom: '10px'}}>{props.totalpromotions}</h3>
                     </div>
                   </div>
                 </div>
@@ -95,7 +95,7 @@ function Dashboard(props) {
                     <div className="card-body">
                       <h4 className="card-title" style={{marginTop: '10px'}}>User</h4>
                       <h6 className="card-subtitle mb-2 text-muted">Total User</h6>
-                      <h3 style={{marginBottom: '10px'}}>8</h3>
+                      <h3 style={{marginBottom: '10px'}}>{props.totaluser}</h3>
                     </div>
                   </div>
                 </div>
@@ -104,7 +104,7 @@ function Dashboard(props) {
                     <div className="card-body">
                       <h4 className="card-title" style={{marginTop: '10px'}}>Review</h4>
                       <h6 className="card-subtitle mb-2 text-muted">Total Review</h6>
-                      <h3 style={{marginBottom: '10px'}}>8</h3>
+                      <h3 style={{marginBottom: '10px'}}>{props.totalreview}</h3>
                     </div>
                   </div>
                 </div>

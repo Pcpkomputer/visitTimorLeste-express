@@ -123,7 +123,26 @@ app.get("/login", async(req,res)=>{
 })
 
 app.get("/",isAuthenticate,async (req,res)=>{
-    res.render("Dashboard");
+
+    let connection = await getConnection();
+
+    let [totaltours] = await connection.query("SELECT COUNT(*) AS totaltours FROM tours;");
+    let [totalcategory] = await connection.query("SELECT COUNT(*) AS totalcategory FROM category;");
+    let [totalspotlights] = await connection.query("SELECT COUNT(*) AS totalspotlights FROM spotlights;");
+    let [totalpromotions] = await connection.query("SELECT COUNT(*) AS totalpromotions FROM promotions;")
+    let [totaluser] = await connection.query("SELECT COUNT(*) AS totaluser FROM user;");
+    let [totalreview] = await connection.query("SELECT COUNT(*) AS totalreview FROM localreview;")
+
+    await connection.release();
+
+    res.render("Dashboard", {
+        totaltours:totaltours[0].totaltours,
+        totalcategory:totalcategory[0].totalcategory,
+        totalspotlights:totalspotlights[0].totalspotlights,
+        totalpromotions:totalpromotions[0].totalpromotions,
+        totaluser:totaluser[0].totaluser,
+        totalreview:totalreview[0].totalreview
+    });
 })
 
 

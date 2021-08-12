@@ -56,7 +56,7 @@ function Category(props) {
                         </p>
                       </a>
                       <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                        <a className="dropdown-item" href="#">Logout</a>
+                        <a className="dropdown-item" href="/logout">Logout</a>
                       </div>
                     </li>
                   </ul>
